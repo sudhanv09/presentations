@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>MuZero: A Corner Stone for AI</title>
+<meta name="author" content="(Sudhanv Apte)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/league.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">MuZero: A Corner Stone for AI</h1><h2 class="author">Sudhanv Apte</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org3f913ae">Reinforcement Learning</a></li>
+<li><a href="#/slide-orgf6dcf84">History</a></li>
+<li><a href="#/slide-org1e16713">Muzero</a></li>
+<li><a href="#/slide-orgdcfe74e">./assets/muzero/end.jpg</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-org3f913ae">
+<h2 id="org3f913ae">Reinforcement Learning</h2>
+<p>
+Reinforcement learning is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward.
+</p>
+
+</section>
+<section id="slide-org8e4ab50">
+<h3 id="org8e4ab50">Terminology</h3>
+<ul>
+<li class="fragment roll-in">Agent</li>
+<li class="fragment roll-in">Reward</li>
+<li class="fragment roll-in">Value</li>
+<li class="fragment roll-in">Policy</li>
+<li class="fragment roll-in">Model</li>
+
+</ul>
+
+</section>
+<section id="slide-orgb094182">
+<h3 id="orgb094182"><img src="./assets/muzero/rl.jpeg" alt="rl.jpeg" /></h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf6dcf84">
+<h2 id="orgf6dcf84">History</h2>
+<div class="outline-text-2" id="text-orgf6dcf84">
+</div>
+</section>
+<section id="slide-org439a364">
+<h3 id="org439a364">Go</h3>
+<p>
+Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
+</p>
+
+</section>
+<section id="slide-org9befb68">
+<h3 id="org9befb68"><img src="./assets/muzero/tree.png" alt="tree.png" /></h3>
+
+</section>
+<section id="slide-org9e1fd02">
+<h3 id="org9e1fd02">AlphaGo</h3>
+<p>
+AlphaGo was the first computer program to play Go well enough to beat the world&rsquo;s leading champion.
+</p>
+
+</section>
+<section id="slide-org38c32b6">
+<h3 id="org38c32b6">How does AlphaGo solve it?</h3>
+<p>
+AlphaGo is based on combination of a Deep Neural Network and MCTS
+It has three components:
+</p>
+
+<ul>
+<li>Policy Network</li>
+<li>Value Network</li>
+<li>Tree Search</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org1e16713">
+<h2 id="org1e16713">Muzero</h2>
+<div class="outline-text-2" id="text-org1e16713">
+</div>
+</section>
+<section id="slide-org8bf813d">
+<h3 id="org8bf813d">What is it?</h3>
+
+</section>
+<section id="slide-org7ad1eb1">
+<h3 id="org7ad1eb1">How is it different?</h3>
+
+</section>
+<section id="slide-orgeaf3bae">
+<h3 id="orgeaf3bae">Working</h3>
+
+</section>
+<section id="slide-org59da4e4">
+<h3 id="org59da4e4">Implications</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdcfe74e">
+<h2 id="orgdcfe74e"><img src="./assets/muzero/end.jpg" alt="end.jpg" /></h2>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes]
+});
+
+</script>
+</body>
+</html>

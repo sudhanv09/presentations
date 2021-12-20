@@ -1,0 +1,50 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME: league
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+TITLE: MuZero: A Corner Stone for AI
+#+AUTHOR: Sudhanv Apte
+
+* Reinforcement Learning
+Reinforcement learning is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward.
+
+** Terminology
+#+ATTR_REVEAL: :frag (roll-in)
+- Agent
+- Reward
+- Value
+- Policy
+- Model
+
+** [[./assets/muzero/rl.jpeg]]
+
+* History
+** Go
+Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
+
+** [[./assets/muzero/tree.png]]
+
+** AlphaGo
+AlphaGo was the first computer program to play Go well enough to beat the world's leading champion.
+
+** How does AlphaGo solve it?
+AlphaGo is based on combination of a Deep Neural Network and MCTS
+It has three components:
+
+- Policy Network
+- Value Network
+- Tree Search
+
+* Muzero
+** What is it?
+
+** How is it different?
+
+** Working
+
+** Implications
+
+* [[./assets/muzero/end.jpg]]
