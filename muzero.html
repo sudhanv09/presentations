@@ -21,48 +21,60 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-org60b11f5">Introduction</a></li>
-<li><a href="#/slide-orgcc6dc76">History</a></li>
-<li><a href="#/slide-org9fcddb9">Muzero</a></li>
-<li><a href="#/slide-org22b32fb">Implications</a></li>
-<li><a href="#/slide-org84866d6">Conclusion</a></li>
+<li><a href="#/slide-orgb6040ed">Introduction</a></li>
+<li><a href="#/slide-org9aa6d10">History</a></li>
+<li><a href="#/slide-orgf259728">Muzero</a></li>
+<li><a href="#/slide-org1553b36">Implications</a></li>
+<li><a href="#/slide-org04b7e76">Conclusion</a></li>
 </ul>
 </div>
 </div>
 </section>
 
+
 <section>
-<section id="slide-org60b11f5">
-<h2 id="org60b11f5">Introduction</h2>
+<section id="slide-orgb6040ed">
+<h2 id="orgb6040ed">Introduction</h2>
+<ul>
+<li>Planning based algorithms have had massive successes</li>
+<li>They rely on environment dynamics</li>
+<li>Model based RL solves this</li>
+
+</ul>
 
 </section>
 </section>
 <section>
-<section id="slide-orgcc6dc76">
-<h2 id="orgcc6dc76">History</h2>
-<div class="outline-text-2" id="text-orgcc6dc76">
+<section id="slide-org9aa6d10">
+<h2 id="org9aa6d10">History</h2>
+<div class="outline-text-2" id="text-org9aa6d10">
 </div>
 </section>
-<section id="slide-orgec87180">
-<h3 id="orgec87180">Go</h3>
+<section id="slide-orgf59e879">
+<h3 id="orgf59e879">Go</h3>
 <p>
 Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
 </p>
 
 </section>
-<section id="slide-org72f01b9">
-<h3 id="org72f01b9"><img src="./assets/muzero/tree.png" alt="tree.png" /></h3>
+<section id="slide-orgd14b01d">
+<h3 id="orgd14b01d">Go Search Space</h3>
+
+<div id="orgd49e3b6" class="figure">
+<p><img src="./assets/muzero/tree.png" alt="tree.png" />
+</p>
+</div>
 
 </section>
-<section id="slide-org7145308">
-<h3 id="org7145308">AlphaGo</h3>
+<section id="slide-org80261dc">
+<h3 id="org80261dc">AlphaGo</h3>
 <p>
 AlphaGo was the first computer program to play Go well enough to beat the world&rsquo;s leading champion.
 </p>
 
 </section>
-<section id="slide-org6a9fa8f">
-<h3 id="org6a9fa8f">How does AlphaGo solve it?</h3>
+<section id="slide-org6122ee6">
+<h3 id="org6122ee6">How does AlphaGo solve it?</h3>
 <p>
 AlphaGo is based on combination of a Deep Neural Network and MCTS.
 </p>
@@ -80,13 +92,13 @@ It has three components:
 </section>
 </section>
 <section>
-<section id="slide-org9fcddb9">
-<h2 id="org9fcddb9">Muzero</h2>
-<div class="outline-text-2" id="text-org9fcddb9">
+<section id="slide-orgf259728">
+<h2 id="orgf259728">Muzero</h2>
+<div class="outline-text-2" id="text-orgf259728">
 </div>
 </section>
-<section id="slide-org72d564c">
-<h3 id="org72d564c">What is it?</h3>
+<section id="slide-org1632e8d">
+<h3 id="org1632e8d">What is it?</h3>
 <p>
 Muzero is successor to AlphaZero. Similar to AlphaGo and AlphaZero it uses MCTS to get neural network
 predictions and choose actions.
@@ -96,17 +108,17 @@ predictions and choose actions.
 It requires no rules
 </p>
 </section>
-<section id="slide-org6aa488b">
-<h3 id="org6aa488b">How is it different?</h3>
+<section id="slide-org62f8537">
+<h3 id="org62f8537">How is it different?</h3>
 
-<div id="orga310c2e" class="figure">
+<div id="orgbc17c2d" class="figure">
 <p><img src="./assets/muzero/compare.webp" alt="compare.webp" width="50%" />
 </p>
 </div>
 
 </section>
-<section id="slide-orgcb4ff32">
-<h3 id="orgcb4ff32">MCTS</h3>
+<section id="slide-org4bc81cc">
+<h3 id="org4bc81cc">MCTS</h3>
 <div style="width:50%;float:left">
 <img src="assets/muzero/search_tree.webp" style="width: 100%">
 </div>
@@ -116,9 +128,10 @@ It requires no rules
 <h4>&nbsp;&nbsp;Expansion</h4>
 <h4>&nbsp;&nbsp;Backprop</h4>
 </div>
+
 </section>
-<section id="slide-orgb04a58e">
-<h3 id="orgb04a58e">Episode Generation</h3>
+<section id="slide-org38a0863">
+<h3 id="org38a0863">Episode Generation</h3>
 <div style="width:50%;float:right">
 <img src="assets/muzero/episode.webp" style="width: 100%">
 </div>
@@ -129,8 +142,8 @@ It requires no rules
 </div>
 
 </section>
-<section id="slide-org0665cec">
-<h3 id="org0665cec">Training</h3>
+<section id="slide-org858fd0f">
+<h3 id="org858fd0f">Training</h3>
 <div style="width:50%;float:left">
 <img src="assets/muzero/training.webp" style="width: 100%">
 </div>
@@ -141,17 +154,17 @@ It requires no rules
 </div>
 
 </section>
-<section id="slide-org5bd4c38">
-<h3 id="org5bd4c38">Architecture</h3>
+<section id="slide-orge5edae1">
+<h3 id="orge5edae1">Architecture</h3>
 
-<div id="org265027a" class="figure">
+<div id="orgd349e6e" class="figure">
 <p><img src="./assets/muzero/arch.png" alt="arch.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org01588bf">
-<h3 id="org01588bf">Results</h3>
+<section id="slide-org2718e98">
+<h3 id="org2718e98">Results</h3>
 <ul>
 <li>Tested on Go, Shogi, Chess and Atari Suite</li>
 <li>MuZero performs slightly better than AlphaZero while using less compute in Go.</li>
@@ -162,16 +175,23 @@ It requires no rules
 </section>
 </section>
 <section>
-<section id="slide-org22b32fb">
-<h2 id="org22b32fb">Implications</h2>
+<section id="slide-org1553b36">
+<h2 id="org1553b36">Implications</h2>
+<ul>
+<li>Self-Driving Cars, Robotics</li>
+<li>Stock Market</li>
+<li>Compression</li>
+<li>Virtual Assistants</li>
+
+</ul>
 
 </section>
 </section>
 <section>
-<section id="slide-org84866d6">
-<h2 id="org84866d6">Conclusion</h2>
+<section id="slide-org04b7e76">
+<h2 id="org04b7e76">Conclusion</h2>
 
-<div id="orgbefe2ca" class="figure">
+<div id="orgc9439f7" class="figure">
 <p><img src="./assets/muzero/end.jpg" alt="end.jpg" />
 </p>
 </div>

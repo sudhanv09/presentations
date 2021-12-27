@@ -86,6 +86,9 @@ It requires no rules
 
 * Implications
 - Self-Driving Cars, Robotics
+- Stock Market
+- Compression
+- Virtual Assistants
 
 * Conclusion
 [[./assets/muzero/end.jpg]]

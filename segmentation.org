@@ -1,9 +1,44 @@
-#+TITLE: Scene Inference using Segmentation
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME: moon
+#+REVEAL_INIT_OPTIONS: transition: 'concave'
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+TITLE: Drone Footage Segmentation
 #+OPTIONS: date:nil toc:1
+
 * Introduction
+** Objective
++ Drone Landing needs the area to be clear
++ Detecting obstacles near the landing zone is important
++ Segmentation is used to get pixel level detection
+
+** Architecture
++ UNet is used for segmentation task
++ MobilNet is used for feature detection
 
 * Data
++ Dataset sourced from kaggle
++ Dataset contains 400 images and mask pairs
++ Preprocessing techniques like horizontal and vertical flip, random brightness, gaussian noise
++ Divided into 306 train, 54 val and 40 test images.
 
-* Model
+* Training
++ Training for 12 epochs
++ Validation after each training epoch
 
 * Evaluation
++ Pixel accuracy
++ MIoU because pixel accuracy can be decieving.
+
+* Results
+** Test 1
+[[./assets/segmentation/test_1.png]]
+
+** Test 2
+[[./assets/segmentation/test_2.png]]
+
+** Test 3
+[[./assets/segmentation/test_3.png]]
