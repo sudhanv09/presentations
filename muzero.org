@@ -2,49 +2,90 @@
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+REVEAL_REVEAL_JS_VERSION: 4
 #+REVEAL_THEME: league
+#+REVEAL_INIT_OPTIONS: transition: 'concave'
 #+OPTIONS: timestamp:nil toc:1 num:nil
 :END:
 
 #+TITLE: MuZero: A Corner Stone for AI
 #+AUTHOR: Sudhanv Apte
 
-* Reinforcement Learning
-Reinforcement learning is an area of machine learning concerned with how intelligent agents ought to take actions in an environment in order to maximize the notion of cumulative reward.
-
-** Terminology
-#+ATTR_REVEAL: :frag (roll-in)
-- Agent
-- Reward
-- Value
-- Policy
-- Model
-
-** [[./assets/muzero/rl.jpeg]]
+* Introduction
+- Planning based algorithms have had massive successes
+- They rely on environment dynamics
+- Model based RL solves this
 
 * History
 ** Go
 Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
 
-** [[./assets/muzero/tree.png]]
+** Go Search Space
+[[./assets/muzero/tree.png]]
 
 ** AlphaGo
 AlphaGo was the first computer program to play Go well enough to beat the world's leading champion.
 
 ** How does AlphaGo solve it?
-AlphaGo is based on combination of a Deep Neural Network and MCTS
-It has three components:
+AlphaGo is based on combination of a Deep Neural Network and MCTS.
 
+It has three components:
 - Policy Network
 - Value Network
 - Tree Search
 
 * Muzero
 ** What is it?
+Muzero is successor to AlphaZero. Similar to AlphaGo and AlphaZero it uses MCTS to get neural network
+predictions and choose actions.
 
+It requires no rules
 ** How is it different?
+#+ATTR_HTML: :width 50%
+[[./assets/muzero/compare.webp]]
 
-** Working
+** MCTS
+ #+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/muzero/search_tree.webp" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float: left">
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Best first search</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Simulation</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Expansion</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Backprop</h4>
+ #+REVEAL_HTML: </div>
 
-** Implications
+** Episode Generation
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/muzero/episode.webp" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float: left">
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Run a search</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Select action according to policy</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Apply action to get next state</h4>
+ #+REVEAL_HTML: </div>
 
-* [[./assets/muzero/end.jpg]]
+** Training
+ #+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/muzero/training.webp" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float: left">
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Representation</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Dynamic</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Prediction</h4>
+ #+REVEAL_HTML: </div>
+
+** Architecture
+[[./assets/muzero/arch.png]]
+
+** Results
+- Tested on Go, Shogi, Chess and Atari Suite
+- MuZero performs slightly better than AlphaZero while using less compute in Go.
+- In Atari, MuZero achieved SOTA
+
+* Implications
+- Self-Driving Cars, Robotics
+
+* Conclusion
+[[./assets/muzero/end.jpg]]

@@ -1,0 +1,9 @@
+#+TITLE: Scene Inference using Segmentation
+#+OPTIONS: date:nil toc:1
+* Introduction
+
+* Data
+
+* Model
+
+* Evaluation
