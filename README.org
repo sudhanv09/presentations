@@ -5,4 +5,5 @@ A repo for my presentations. Made with revealjs and org-mode
 Find my presentations:
 
 Muzero: [[https://sudhanv09.github.io/presentations/muzero.html][HERE]]
-Segmentation: [[sudhanv09.github.io/presentations/segmentation.html][HERE]]
+
+Segmentation: [[https://sudhanv09.github.io/presentations/segmentation.html][HERE]]

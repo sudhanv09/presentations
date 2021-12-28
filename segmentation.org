@@ -16,8 +16,14 @@
 + Segmentation is used to get pixel level detection
 
 ** Architecture
-+ UNet is used for segmentation task
-+ MobilNet is used for feature detection
+ #+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/segmentation/unet.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float: left">
+ #+REVEAL_HTML: <h3>&nbsp;&nbsp;UNet</h3>
+ #+REVEAL_HTML: <h3>&nbsp;&nbsp;MobileNetv2</h3>
+ #+REVEAL_HTML: </div>
 
 * Data
 + Dataset sourced from kaggle
@@ -25,13 +31,33 @@
 + Preprocessing techniques like horizontal and vertical flip, random brightness, gaussian noise
 + Divided into 306 train, 54 val and 40 test images.
 
+** Example
+[[./assets/segmentation/mask_applied.png]]
+
 * Training
-+ Training for 12 epochs
++ Training for 14 epochs
 + Validation after each training epoch
++ Cross Entropy Loss
++ AdamW Optimiser
 
 * Evaluation
-+ Pixel accuracy
++ Pixel accuracy: 80%
++ MIoU around 0.35 - 0.45
 + MIoU because pixel accuracy can be decieving.
+
+** Plots
+ #+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/segmentation/accuracy.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/segmentation/loss.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:bottom">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/segmentation/miou.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
 
 * Results
 ** Test 1
