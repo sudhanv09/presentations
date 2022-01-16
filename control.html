@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>QuadCopter Adaptive Control</title>
+<meta name="author" content="(Sudhanv Apte)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/league.css" id="theme"/>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">QuadCopter Adaptive Control</h1><h2 class="author">Sudhanv Apte</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgdd908f2">Introduction</a></li>
+<li><a href="#/slide-orgf813334">Objective</a></li>
+<li><a href="#/slide-org9382d4c">Linearization</a></li>
+<li><a href="#/slide-orga72da3e">MRAC</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-orgdd908f2">
+<h2 id="orgdd908f2">Introduction</h2>
+<ul>
+<li>Traditional control laws are designed with ideal parameters</li>
+<li>This is not feasible in real world</li>
+<li>Adaptive Control Techniques solve this</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf813334">
+<h2 id="orgf813334">Objective</h2>
+<ul>
+<li>Design of quadcopter controller using Linearized Control Laws</li>
+<li>Compare with Linearized and Non Linearized MRAC techniques</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org9382d4c">
+<h2 id="org9382d4c">Linearization</h2>
+<ul>
+<li>Linearize the equations of hover</li>
+<li>System is given by \(\dot{x} = A\Delta{X} + B\Delta{U}\)</li>
+<li>In order to obtain linear representation we need jacobian matrices A and B.</li>
+
+</ul>
+
+</section>
+<section id="slide-org41904fe">
+<h3 id="org41904fe">Linear Controller</h3>
+<ul>
+<li>Need to find Gain matrix K</li>
+<li>\(\Delta{\dot{X}} = A\Delta{X} + B\Delta{U}\)</li>
+<li>\(\Delta{U} = -K\Delta{X}\)</li>
+<li>Finally we get</li>
+<li>\(\Delta{\dot{X}} = (A-BK)\Delta{X}\)</li>
+
+</ul>
+
+</section>
+<section id="slide-org2af962d">
+<h3 id="org2af962d">Results</h3>
+<div class="outline-text-3" id="text-org2af962d">
+</div>
+</section>
+<section id="slide-org23e45e0">
+<h4 id="org23e45e0">Result 1</h4>
+
+<div id="org534b932" class="figure">
+<p><img src="./assets/control/fig_1.png" alt="fig_1.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Linear Laws</p>
+</div>
+
+</section>
+<section id="slide-orgac2b48d">
+<h4 id="orgac2b48d">Result 2</h4>
+
+<div id="orga1926db" class="figure">
+<p><img src="./assets/control/fig_2.png" alt="fig_2.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Linear Laws</p>
+</div>
+
+</section>
+<section id="slide-orgcf37df6">
+<h4 id="orgcf37df6">Result 3</h4>
+
+<div id="org054590f" class="figure">
+<p><img src="./assets/control/fig_3.png" alt="fig_3.png" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Linear Laws</p>
+</div>
+
+</section>
+<section id="slide-org4423b5d">
+<h4 id="org4423b5d">Result 4</h4>
+
+<div id="org52b9650" class="figure">
+<p><img src="./assets/control/fig_4.png" alt="fig_4.png" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Linear Laws</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orga72da3e">
+<h2 id="orga72da3e">MRAC</h2>
+<ul>
+<li>\(\Delta{X} and \Delta{U}\) are taken as state and input</li>
+<li>Estimated Plant is created with incorrect parameters</li>
+<li>\(\dot{x}(t) = A_{pm}x(t) + B_{pm}u(t)\)</li>
+<li>Controller: \(u(t) = K_{x}^{T}(t)x(t) + K_{r}^{T}(t)r(t)\)</li>
+<li>Adaptation Laws</li>
+
+</ul>
+
+<p>
+\(\dot{K_{x}}(t) = -\Gamma_{x}x(t)e^{T}(t)PB\)
+\(\dot{K_{r}}(t) = -\Gamma_{r}r(t)e^{T}(t)PB\)
+</p>
+
+</section>
+<section id="slide-org07ef911">
+<h3 id="org07ef911">Results 1</h3>
+<div style="width:50%;float:left">
+<img src="assets/control/fig_2_1.png" style="width: 100%">
+</div>
+<div style="width:50%;float:right">
+<img src="assets/control/fig_2_2.png" style="width: 100%">
+</div>
+<div style="width:50%;float:bottom">
+<img src="assets/control/fig_2_3.png" style="width: 100%">
+</div>
+
+</section>
+<section id="slide-orgab15136">
+<h3 id="orgab15136">Result 2</h3>
+<div style="width:50%;float:left">
+<img src="assets/control/fig_2_4.png" style="width: 100%">
+</div>
+<div style="width:50%;float:right">
+<img src="assets/control/fig_2_5.png" style="width: 100%">
+</div>
+<div style="width:50%;float:bottom">
+<img src="assets/control/fig_2_6.png" style="width: 100%">
+</div>
+
+</section>
+<section id="slide-org7ae1477">
+<h3 id="org7ae1477">Result 3</h3>
+<div style="width:50%;float:left">
+<img src="assets/control/fig_2_7.png" style="width: 100%">
+</div>
+<div style="width:50%;float:right">
+<img src="assets/control/fig_2_8.png" style="width: 100%">
+</div>
+<div style="width:50%;float:bottom">
+<img src="assets/control/fig_2_9.png" style="width: 100%">
+</div>
+
+</section>
+<section id="slide-org9a98f73">
+<h3 id="org9a98f73">Result 4</h3>
+<div style="width:50%;float:left">
+<img src="assets/control/fig_2_10.png" style="width: 100%">
+</div>
+<div style="width:50%;float:right">
+<img src="assets/control/fig_2_11.png" style="width: 100%">
+</div>
+<div style="width:50%;float:bottom">
+<img src="assets/control/fig_2_12.png" style="width: 100%">
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition: 'concave'
+});
+
+</script>
+</body>
+</html>

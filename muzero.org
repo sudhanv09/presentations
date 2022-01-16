@@ -19,7 +19,7 @@
 Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
 
 ** Go Search Space
-[[./assets/muzero/tree.png]]
+[[./assets/muzero/go_tree.png]]
 
 ** AlphaGo
 AlphaGo was the first computer program to play Go well enough to beat the world's leading champion.
@@ -91,4 +91,4 @@ It requires no rules
 - Virtual Assistants
 
 * Conclusion
-[[./assets/muzero/end.jpg]]
+[[./assets/muzero/frog.jpg]]

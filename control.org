@@ -1,0 +1,127 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME: league
+#+REVEAL_INIT_OPTIONS: transition: 'concave'
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+TITLE: QuadCopter Adaptive Control
+#+AUTHOR: Sudhanv Apte
+
+* Introduction
+- Traditional control laws are designed with ideal parameters
+- This is not feasible in real world
+- Adaptive Control Techniques solve this
+
+* Objective
+- Design of quadcopter controller using Linearized Control Laws
+- Compare with Linearized and Non Linearized MRAC techniques
+
+* Linearization
+- Linearize the equations of hover
+- System is given by $\dot{x} = A\Delta{X} + B\Delta{U}$
+- In order to obtain linear representation we need jacobian matrices A and B.
+
+** Linear Controller
+- Need to find Gain matrix K
+- $\Delta{\dot{X}} = A\Delta{X} + B\Delta{U}$
+- $\Delta{U} = -K\Delta{X}$
+- Finally we get
+- $\Delta{\dot{X}} = (A-BK)\Delta{X}$
+
+** Results
+
+*** Result 1
+#+CAPTION: Linear Laws
+#+NAME: Fig. 1
+#+ATTR_LATEX: :width 4cm
+[[./assets/control/fig_1.png]]
+
+*** Result 2
+#+CAPTION: Linear Laws
+#+NAME: Fig. 2
+#+ATTR_LATEX: :width 4cm
+[[./assets/control/fig_2.png]]
+
+*** Result 3
+#+CAPTION: Linear Laws
+#+NAME: Fig. 3
+#+ATTR_LATEX: :width 4cm
+[[./assets/control/fig_3.png]]
+
+*** Result 4
+#+CAPTION: Linear Laws
+#+NAME: Fig. 4
+#+ATTR_LATEX: :width 4cm
+[[./assets/control/fig_4.png]]
+
+
+* MRAC
+- $\Delta{X} and \Delta{U}$ are taken as state and input
+- Estimated Plant is created with incorrect parameters
+- $\dot{x}(t) = A_{pm}x(t) + B_{pm}u(t)$
+- Controller: $u(t) = K_{x}^{T}(t)x(t) + K_{r}^{T}(t)r(t)$
+- Adaptation Laws
+
+$\dot{K_{x}}(t) = -\Gamma_{x}x(t)e^{T}(t)PB$
+$\dot{K_{r}}(t) = -\Gamma_{r}r(t)e^{T}(t)PB$
+
+** Results 1
+#+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_1.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_2.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:bottom">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_3.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+
+** Result 2
+#+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_4.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_5.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:bottom">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_6.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+
+** Result 3
+#+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_7.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_8.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:bottom">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_9.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+
+** Result 4
+#+REVEAL_HTML: <div style="width:50%;float:left">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_10.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:right">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_11.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+ #+REVEAL_HTML: <div style="width:50%;float:bottom">
+ #+REVEAL_HTML:
+ #+REVEAL_HTML: <img src="assets/control/fig_2_12.png" style="width: 100%">
+ #+REVEAL_HTML: </div>
+
+* Conclusion
+- Adaptive Controller tracks better than Linear Controller
