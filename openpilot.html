@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>OpenPilot: An OSS Driving Agent</title>
+<meta name="author" content="Sudhanv Apte"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/league.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">OpenPilot: An OSS Driving Agent</h1><p class="subtitle"></p>
+<h2 class="author">Sudhanv Apte</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgd8f770d">Introduction</a></li>
+<li><a href="#/slide-org52173e3">How does OpenPilot work?</a></li>
+<li><a href="#/slide-org6eb61d2">Implications</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-orgd8f770d">
+<h2 id="orgd8f770d">Introduction</h2>
+<div style="width:50%;float:right">
+<img src="assets/openpilot/openpilot.gif" style="width: 100%">
+</div>
+<div style="width:50%;float: right">
+<h4>&nbsp;&nbsp;Openpilot is a level 2 driving agent</h4>
+<h4>&nbsp;&nbsp;Retrofitted to the car</h4>
+<h4>&nbsp;&nbsp;Designed to drive like a human</h4>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org52173e3">
+<h2 id="org52173e3">How does OpenPilot work?</h2>
+<div class="outline-text-2" id="text-org52173e3">
+</div>
+</section>
+<section id="slide-orgf4922a7">
+<h3 id="orgf4922a7">How does it talk to the car?</h3>
+<div style="width:50%;float:left">
+<img src="assets/openpilot/panda.png" style="width: 80%">
+</div>
+<div style="width:50%;float: left">
+<h4>&nbsp;&nbsp;Uses CAN to intercept calls</h4>
+<h4>&nbsp;&nbsp;To steer OpenPilot puts torque on the wheel</h4>
+<h4>&nbsp;&nbsp;Hardware abstraction to generalise all the cars</h4>
+</div>
+
+</section>
+<section id="slide-org3fa1c83">
+<h3 id="org3fa1c83">Model</h3>
+<div style="width:50%;float:right">
+<img src="assets/openpilot/recovery.gif" style="width: 130%">
+</div>
+<div style="width:50%;float: right">
+<h4>&nbsp;&nbsp;Tries to predict where to driver</h4>
+<h4>&nbsp;&nbsp;Outputs DESIRE</h4>
+<h4>&nbsp;&nbsp;Uses GRU to store temporal information</h4>
+</div>
+
+
+</section>
+<section id="slide-org2d49b3d">
+<h3 id="org2d49b3d">Controls</h3>
+<ul>
+<li>Once the trajectory is decided, the planner executes it.</li>
+<li>Lateral and Longitudinal both use MPC to smoothen and optimize the plans</li>
+<li>Longitudinal uses the radar to estimate the lead car and computes the accelaration.</li>
+
+</ul>
+</section>
+<section id="slide-orga735d11">
+<h3 id="orga735d11">Driver Monitoring</h3>
+<div style="width:50%;float:left">
+<img src="assets/openpilot/monitoring.png" style="width: 100%">
+</div>
+<div style="width:50%;float: left">
+<h4>&nbsp;&nbsp;Checks if driver is paying attention</h4>
+<h4>&nbsp;&nbsp;Tracks face, eyes, sunglasses</h4>
+<h4>&nbsp;&nbsp;Disengages if the driver isnt paying attention</h4>
+</div>
+
+</section>
+<section id="slide-orgc7ba482">
+<h3 id="orgc7ba482">Safety</h3>
+<ul>
+<li>Enforces driver to pay attention</li>
+<li>Safety code running on the CAN interface</li>
+<li>Pressing Gas or Break cancels OpenPilot</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org6eb61d2">
+<h2 id="org6eb61d2">Implications</h2>
+<ul>
+<li>Open source, MIT license implies anybody can fork it</li>
+<li>End to End replicates human driving</li>
+<li>Can be the android to Tesla&rsquo;s Autoilot</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition: 'concave'
+});
+
+</script>
+</body>
+</html>

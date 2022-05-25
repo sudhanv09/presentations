@@ -7,3 +7,7 @@ Find my presentations:
 Muzero: [[https://sudhanv09.github.io/presentations/muzero.html][HERE]]
 
 Segmentation: [[https://sudhanv09.github.io/presentations/segmentation.html][HERE]]
+
+Adaptive Control: [[https://sudhanv09.github.io/presentations/control.html][HERE]]
+
+OpenPilot: [[https://sudhanv09.github.io/presentations/opepilot.html][HERE]]

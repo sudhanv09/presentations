@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <title>Drone Footage Segmentation</title>
-<meta name="author" content="(Sudhanv Apte)"/>
+<meta name="author" content="Sudhanv Apte"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -15,17 +17,18 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Drone Footage Segmentation</h1><h2 class="author">Sudhanv Apte</h2>
+<section id="sec-title-slide"><h1 class="title">Drone Footage Segmentation</h1><p class="subtitle"></p>
+<h2 class="author">Sudhanv Apte</h2>
 </section>
 <section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-org875d653">Introduction</a></li>
-<li><a href="#/slide-org1f9c939">Data</a></li>
-<li><a href="#/slide-orgcef2ef7">Training</a></li>
-<li><a href="#/slide-orgc4a51e1">Evaluation</a></li>
-<li><a href="#/slide-org336828d">Results</a></li>
+<li><a href="#/slide-org0580829">Introduction</a></li>
+<li><a href="#/slide-org62d3b53">Data</a></li>
+<li><a href="#/slide-orgf474326">Training</a></li>
+<li><a href="#/slide-org000a48f">Evaluation</a></li>
+<li><a href="#/slide-org1d2fe85">Results</a></li>
 </ul>
 </div>
 </div>
@@ -33,13 +36,13 @@
 
 
 <section>
-<section id="slide-org875d653">
-<h2 id="org875d653">Introduction</h2>
-<div class="outline-text-2" id="text-org875d653">
+<section id="slide-org0580829">
+<h2 id="org0580829">Introduction</h2>
+<div class="outline-text-2" id="text-org0580829">
 </div>
 </section>
-<section id="slide-org9950559">
-<h3 id="org9950559">Objective</h3>
+<section id="slide-orgfabe72b">
+<h3 id="orgfabe72b">Objective</h3>
 <ul>
 <li>Drone Landing needs the area to be clear</li>
 <li>Detecting obstacles near the landing zone is important</li>
@@ -48,8 +51,8 @@
 </ul>
 
 </section>
-<section id="slide-org6cd9dcb">
-<h3 id="org6cd9dcb">Architecture</h3>
+<section id="slide-orgd9ec6f7">
+<h3 id="orgd9ec6f7">Architecture</h3>
 <div style="width:50%;float:left">
 <img src="assets/segmentation/unet.png" style="width: 100%">
 </div>
@@ -61,8 +64,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org1f9c939">
-<h2 id="org1f9c939">Data</h2>
+<section id="slide-org62d3b53">
+<h2 id="org62d3b53">Data</h2>
 <ul>
 <li>Dataset sourced from kaggle</li>
 <li>Dataset contains 400 images and mask pairs</li>
@@ -72,10 +75,10 @@
 </ul>
 
 </section>
-<section id="slide-org463f118">
-<h3 id="org463f118">Example</h3>
+<section id="slide-orgb56cbfd">
+<h3 id="orgb56cbfd">Example</h3>
 
-<div id="orge2b4833" class="figure">
+<div id="orgca7f990" class="figure">
 <p><img src="./assets/segmentation/mask_applied.png" alt="mask_applied.png" />
 </p>
 </div>
@@ -83,8 +86,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgcef2ef7">
-<h2 id="orgcef2ef7">Training</h2>
+<section id="slide-orgf474326">
+<h2 id="orgf474326">Training</h2>
 <ul>
 <li>Training for 14 epochs</li>
 <li>Validation after each training epoch</li>
@@ -96,8 +99,8 @@
 </section>
 </section>
 <section>
-<section id="slide-orgc4a51e1">
-<h2 id="orgc4a51e1">Evaluation</h2>
+<section id="slide-org000a48f">
+<h2 id="org000a48f">Evaluation</h2>
 <ul>
 <li>Pixel accuracy: 80%</li>
 <li>MIoU around 0.35 - 0.45</li>
@@ -106,8 +109,8 @@
 </ul>
 
 </section>
-<section id="slide-org517899b">
-<h3 id="org517899b">Plots</h3>
+<section id="slide-orga97ae5b">
+<h3 id="orga97ae5b">Plots</h3>
 <div style="width:50%;float:left">
 <img src="assets/segmentation/accuracy.png" style="width: 100%">
 </div>
@@ -121,33 +124,33 @@
 </section>
 </section>
 <section>
-<section id="slide-org336828d">
-<h2 id="org336828d">Results</h2>
-<div class="outline-text-2" id="text-org336828d">
+<section id="slide-org1d2fe85">
+<h2 id="org1d2fe85">Results</h2>
+<div class="outline-text-2" id="text-org1d2fe85">
 </div>
 </section>
-<section id="slide-orgbbbb07c">
-<h3 id="orgbbbb07c">Test 1</h3>
+<section id="slide-org77771c7">
+<h3 id="org77771c7">Test 1</h3>
 
-<div id="org518759f" class="figure">
+<div id="org01ef56f" class="figure">
 <p><img src="./assets/segmentation/test_1.png" alt="test_1.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org08b9591">
-<h3 id="org08b9591">Test 2</h3>
+<section id="slide-orgd04d20c">
+<h3 id="orgd04d20c">Test 2</h3>
 
-<div id="orgdbd8f42" class="figure">
+<div id="orgb2f7875" class="figure">
 <p><img src="./assets/segmentation/test_2.png" alt="test_2.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-orgb6fe0fe">
-<h3 id="orgb6fe0fe">Test 3</h3>
+<section id="slide-org608892e">
+<h3 id="org608892e">Test 3</h3>
 
-<div id="org8fd97d0" class="figure">
+<div id="orgc158a36" class="figure">
 <p><img src="./assets/segmentation/test_3.png" alt="test_3.png" />
 </p>
 </div>
