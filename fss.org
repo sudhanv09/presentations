@@ -1,0 +1,70 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME: night
+#+REVEAL_INIT_OPTIONS: transition: 'concave'
+#+REVEAL_PLUGINS: note
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+title: S-FLASH
+#+SUBTITLE: A NAND Flash based DNN Accelerator Exploiting Bit-Level Sparsity
+
+* Introduction
+- Data communication issue
+- PiM is a promising solution but requires more cycles
+- NAND Flash has high memory density and by default supports VMM
+- However it has slower memory  operations and uses ADC
+* S-FLASH
+** Propositions
+- A NAND flash based accelerator to achieve memory density and energy efficiency
+- Optimized bit-width partial multiplication
+- Exploiting bit-level sparsity to reduce domain conversion process
+** Configuration
+- Multi-bit activation and weight are divided into partial units due to limited DAC
+- B_a and B_w represent bit width of partial activation and weight
+- Bit width of partial unit increases then number of partial units to complete process decreases
+
+* Architecture
+** MAC Operation
+- Partial multiplication produces current only when both operands are 1
+- Activation data is represented by the block select signal
+- Each string produces a single read current and we use that as the processing element.
+
+  [[./assets/FSS/sflash_arch.png]]
+
+** Weight Data Layout
+#+REVEAL_HTML: <div style="width:50%;float:left">
+#+REVEAL_HTML:
+#+REVEAL_HTML: <img src="assets/FSS/weight_data.png" style="width: 100%">
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div style="width:50%;float: left">
+#+REVEAL_HTML: <h4>&nbsp;&nbsp;Two spaces for weight data and only store magnitude of weight data.</h4>
+#+REVEAL_HTML: <h4>&nbsp;&nbsp;Weight data on the same page share activation data</h4>
+#+REVEAL_HTML: <h4>&nbsp;&nbsp;For multiple layers, we store weight data in different positions of string</h4>
+#+REVEAL_HTML: </div>
+
+** Bit-Level Sparsity
+- Defined as the probability that data of each bit is zero
+- Bit level sparsity > value level sparsity
+- 99% of multiplications are zero
+
+  [[./assets/FSS/sparsity.png]]
+
+** Exploiting Bit-Level Sparsity
+- Weight allocation alteration by using Booth encoding
+Ex: -15 (00000000, 00001111) is represented as "00000001", "00010000"
+- Isolate MSBs and LSBs by assigning spaces in different rows of the string
+
+  [[./assets/FSS/multiply.png]]
+
+** Continued ...
+- Increase the number of processing units due to limited SA
+- Increase processing units by increasing no of activation data passed to S-FLASH decoder
+
+  [[./assets/FSS/timing.png]]
+
+* Conclusion
+- Fast and energy efficient MAC operations
+- Exploiting zero partial multiplications of DNN
+- Achieves 8.23x higher energy efficiency than baseline

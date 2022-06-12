@@ -53,7 +53,7 @@
  #+REVEAL_HTML: <img src="assets/openpilot/recovery.gif" style="width: 130%">
  #+REVEAL_HTML: </div>
  #+REVEAL_HTML: <div style="width:50%;float: right">
- #+REVEAL_HTML: <h4>&nbsp;&nbsp;Tries to predict where to driver</h4>
+ #+REVEAL_HTML: <h4>&nbsp;&nbsp;Tries to predict where to drive</h4>
  #+REVEAL_HTML: <h4>&nbsp;&nbsp;Outputs DESIRE</h4>
  #+REVEAL_HTML: <h4>&nbsp;&nbsp;Uses GRU to store temporal information</h4>
  #+REVEAL_HTML: </div>
@@ -81,10 +81,10 @@
 ** Safety
 - Enforces driver to pay attention
 - Safety code running on the CAN interface
-- Pressing Gas or Break cancels OpenPilot
+- Pressing Gas or Brake cancels OpenPilot
 
 
 * Implications
 - Open source, MIT license implies anybody can fork it
 - End to End replicates human driving
-- Can be the android to Tesla's Autoilot
+- Can be the android to Tesla's AutoPilot

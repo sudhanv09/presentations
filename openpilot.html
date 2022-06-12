@@ -24,9 +24,9 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-orgd8f770d">Introduction</a></li>
-<li><a href="#/slide-org52173e3">How does OpenPilot work?</a></li>
-<li><a href="#/slide-org6eb61d2">Implications</a></li>
+<li><a href="#/slide-org8766964">Introduction</a></li>
+<li><a href="#/slide-org51e5076">How does OpenPilot work?</a></li>
+<li><a href="#/slide-org769679b">Implications</a></li>
 </ul>
 </div>
 </div>
@@ -34,8 +34,8 @@
 
 
 <section>
-<section id="slide-orgd8f770d">
-<h2 id="orgd8f770d">Introduction</h2>
+<section id="slide-org8766964">
+<h2 id="org8766964">Introduction</h2>
 <div style="width:50%;float:right">
 <img src="assets/openpilot/openpilot.gif" style="width: 100%">
 </div>
@@ -49,13 +49,13 @@
 </section>
 </section>
 <section>
-<section id="slide-org52173e3">
-<h2 id="org52173e3">How does OpenPilot work?</h2>
-<div class="outline-text-2" id="text-org52173e3">
+<section id="slide-org51e5076">
+<h2 id="org51e5076">How does OpenPilot work?</h2>
+<div class="outline-text-2" id="text-org51e5076">
 </div>
 </section>
-<section id="slide-orgf4922a7">
-<h3 id="orgf4922a7">How does it talk to the car?</h3>
+<section id="slide-org2ff76f5">
+<h3 id="org2ff76f5">How does it talk to the car?</h3>
 <div style="width:50%;float:left">
 <img src="assets/openpilot/panda.png" style="width: 80%">
 </div>
@@ -66,21 +66,21 @@
 </div>
 
 </section>
-<section id="slide-org3fa1c83">
-<h3 id="org3fa1c83">Model</h3>
+<section id="slide-orge515abd">
+<h3 id="orge515abd">Model</h3>
 <div style="width:50%;float:right">
 <img src="assets/openpilot/recovery.gif" style="width: 130%">
 </div>
 <div style="width:50%;float: right">
-<h4>&nbsp;&nbsp;Tries to predict where to driver</h4>
+<h4>&nbsp;&nbsp;Tries to predict where to drive</h4>
 <h4>&nbsp;&nbsp;Outputs DESIRE</h4>
 <h4>&nbsp;&nbsp;Uses GRU to store temporal information</h4>
 </div>
 
 
 </section>
-<section id="slide-org2d49b3d">
-<h3 id="org2d49b3d">Controls</h3>
+<section id="slide-org6afb5a2">
+<h3 id="org6afb5a2">Controls</h3>
 <ul>
 <li>Once the trajectory is decided, the planner executes it.</li>
 <li>Lateral and Longitudinal both use MPC to smoothen and optimize the plans</li>
@@ -88,8 +88,8 @@
 
 </ul>
 </section>
-<section id="slide-orga735d11">
-<h3 id="orga735d11">Driver Monitoring</h3>
+<section id="slide-org1f2e45e">
+<h3 id="org1f2e45e">Driver Monitoring</h3>
 <div style="width:50%;float:left">
 <img src="assets/openpilot/monitoring.png" style="width: 100%">
 </div>
@@ -100,8 +100,8 @@
 </div>
 
 </section>
-<section id="slide-orgc7ba482">
-<h3 id="orgc7ba482">Safety</h3>
+<section id="slide-org1d830a2">
+<h3 id="org1d830a2">Safety</h3>
 <ul>
 <li>Enforces driver to pay attention</li>
 <li>Safety code running on the CAN interface</li>
@@ -113,8 +113,8 @@
 </section>
 </section>
 <section>
-<section id="slide-org6eb61d2">
-<h2 id="org6eb61d2">Implications</h2>
+<section id="slide-org769679b">
+<h2 id="org769679b">Implications</h2>
 <ul>
 <li>Open source, MIT license implies anybody can fork it</li>
 <li>End to End replicates human driving</li>

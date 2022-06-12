@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>S-FLASH</title>
+<meta name="author" content="Sudhanv Apte"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/night.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">S-FLASH</h1><p class="subtitle">A NAND Flash based DNN Accelerator Exploiting Bit-Level Sparsity</p>
+<h2 class="author">Sudhanv Apte</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgb3145d5">Introduction</a></li>
+<li><a href="#/slide-org0acbd82">S-FLASH</a></li>
+<li><a href="#/slide-org4fb97c9">Architecture</a></li>
+<li><a href="#/slide-org5f8a964">Conclusion</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-orgb3145d5">
+<h2 id="orgb3145d5">Introduction</h2>
+<ul>
+<li>Data communication issue</li>
+<li>PiM is a promising solution but requires more cycles</li>
+<li>NAND Flash has high memory density and by default supports VMM</li>
+<li>However it has slower memory  operations and uses ADC</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org0acbd82">
+<h2 id="org0acbd82">S-FLASH</h2>
+<div class="outline-text-2" id="text-org0acbd82">
+</div>
+</section>
+<section id="slide-org9391b42">
+<h3 id="org9391b42">Propositions</h3>
+<ul>
+<li>A NAND flash based accelerator to achieve memory density and energy efficiency</li>
+<li>Optimized bit-width partial multiplication</li>
+<li>Exploiting bit-level sparsity to reduce domain conversion process</li>
+
+</ul>
+</section>
+<section id="slide-orgd147356">
+<h3 id="orgd147356">Configuration</h3>
+<ul>
+<li>Multi-bit activation and weight are divided into partial units due to limited DAC</li>
+<li>B<sub>a</sub> and B<sub>w</sub> represent bit width of partial activation and weight</li>
+<li>Bit width of partial unit increases then number of partial units to complete process decreases</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org4fb97c9">
+<h2 id="org4fb97c9">Architecture</h2>
+<div class="outline-text-2" id="text-org4fb97c9">
+</div>
+</section>
+<section id="slide-org226f77a">
+<h3 id="org226f77a">MAC Operation</h3>
+<ul>
+<li>Partial multiplication produces current only when both operands are 1</li>
+<li>Activation data is represented by the block select signal</li>
+<li><p>
+Each string produces a single read current and we use that as the processing element.
+</p>
+
+
+<div id="org52d2f76" class="figure">
+<p><img src="./assets/FSS/sflash_arch.png" alt="sflash_arch.png" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgfeef178">
+<h3 id="orgfeef178">Weight Data Layout</h3>
+<div style="width:50%;float:left">
+<img src="assets/FSS/weight_data.png" style="width: 100%">
+</div>
+<div style="width:50%;float: left">
+<h4>&nbsp;&nbsp;Two spaces for weight data and only store magnitude of weight data.</h4>
+<h4>&nbsp;&nbsp;Weight data on the same page share activation data</h4>
+<h4>&nbsp;&nbsp;For multiple layers, we store weight data in different positions of string</h4>
+</div>
+
+</section>
+<section id="slide-org6da7c51">
+<h3 id="org6da7c51">Bit-Level Sparsity</h3>
+<ul>
+<li>Defined as the probability that data of each bit is zero</li>
+<li>Bit level sparsity &gt; value level sparsity</li>
+<li><p>
+99% of multiplications are zero
+</p>
+
+
+<div id="orgff12a79" class="figure">
+<p><img src="./assets/FSS/sparsity.png" alt="sparsity.png" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-org5679c08">
+<h3 id="org5679c08">Exploiting Bit-Level Sparsity</h3>
+<ul>
+<li>Weight allocation alteration by using Booth encoding</li>
+
+</ul>
+<p>
+Ex: -15 (00000000, 00001111) is represented as &ldquo;00000001&rdquo;, &ldquo;00010000&rdquo;
+</p>
+<ul>
+<li><p>
+Isolate MSBs and LSBs by assigning spaces in different rows of the string
+</p>
+
+
+<div id="orgdf25736" class="figure">
+<p><img src="./assets/FSS/multiply.png" alt="multiply.png" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgc01cbea">
+<h3 id="orgc01cbea">Continued &#x2026;</h3>
+<ul>
+<li>Increase the number of processing units due to limited SA</li>
+<li><p>
+Increase processing units by increasing no of activation data passed to S-FLASH decoder
+</p>
+
+
+<div id="orgb436298" class="figure">
+<p><img src="./assets/FSS/timing.png" alt="timing.png" />
+</p>
+</div></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org5f8a964">
+<h2 id="org5f8a964">Conclusion</h2>
+<ul>
+<li>Fast and energy efficient MAC operations</li>
+<li>Exploiting zero partial multiplications of DNN</li>
+<li>Achieves 8.23x higher energy efficiency than baseline</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition: 'concave'
+});
+
+</script>
+</body>
+</html>
