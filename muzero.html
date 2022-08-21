@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <title>MuZero: A Corner Stone for AI</title>
-<meta name="author" content="(Sudhanv Apte)"/>
+<meta name="author" content="Sudhanv Apte"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
 <style type="text/css">
 .underline { text-decoration: underline; }
 </style>
@@ -15,17 +17,18 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">MuZero: A Corner Stone for AI</h1><h2 class="author">Sudhanv Apte</h2>
+<section id="sec-title-slide"><h1 class="title">MuZero: A Corner Stone for AI</h1><p class="subtitle"></p>
+<h2 class="author">Sudhanv Apte</h2>
 </section>
 <section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-orgf164883">Introduction</a></li>
-<li><a href="#/slide-org52666af">History</a></li>
-<li><a href="#/slide-orgf525c45">Muzero</a></li>
-<li><a href="#/slide-orgc7ed5e2">Implications</a></li>
-<li><a href="#/slide-org3855557">Conclusion</a></li>
+<li><a href="#/slide-org172efb3">Introduction</a></li>
+<li><a href="#/slide-org3bcbdd0">History</a></li>
+<li><a href="#/slide-org846840b">Muzero</a></li>
+<li><a href="#/slide-orge772c86">Implications</a></li>
+<li><a href="#/slide-org45b71fd">Conclusion</a></li>
 </ul>
 </div>
 </div>
@@ -33,8 +36,8 @@
 
 
 <section>
-<section id="slide-orgf164883">
-<h2 id="orgf164883">Introduction</h2>
+<section id="slide-org172efb3">
+<h2 id="org172efb3">Introduction</h2>
 <ul>
 <li>Planning based algorithms have had massive successes</li>
 <li>They rely on environment dynamics</li>
@@ -45,36 +48,36 @@
 </section>
 </section>
 <section>
-<section id="slide-org52666af">
-<h2 id="org52666af">History</h2>
-<div class="outline-text-2" id="text-org52666af">
+<section id="slide-org3bcbdd0">
+<h2 id="org3bcbdd0">History</h2>
+<div class="outline-text-2" id="text-org3bcbdd0">
 </div>
 </section>
-<section id="slide-org8693f2a">
-<h3 id="org8693f2a">Go</h3>
+<section id="slide-org5417456">
+<h3 id="org5417456">Go</h3>
 <p>
 Go is known as the most challenging classical game for artificial intelligence because of its complexity. There are more than 10 ^ 170 different positions.
 </p>
 
 </section>
-<section id="slide-org7acc213">
-<h3 id="org7acc213">Go Search Space</h3>
+<section id="slide-org33becc6">
+<h3 id="org33becc6">Go Search Space</h3>
 
-<div id="orgf891993" class="figure">
-<p><img src="./assets/muzero/tree.png" alt="tree.png" />
+<div id="orgac0af09" class="figure">
+<p><img src="./assets/muzero/go_tree.png" alt="go_tree.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org766bd50">
-<h3 id="org766bd50">AlphaGo</h3>
+<section id="slide-orgdea78f0">
+<h3 id="orgdea78f0">AlphaGo</h3>
 <p>
 AlphaGo was the first computer program to play Go well enough to beat the world&rsquo;s leading champion.
 </p>
 
 </section>
-<section id="slide-org1d0ea47">
-<h3 id="org1d0ea47">How does AlphaGo solve it?</h3>
+<section id="slide-org65458a6">
+<h3 id="org65458a6">How does AlphaGo solve it?</h3>
 <p>
 AlphaGo is based on combination of a Deep Neural Network and MCTS.
 </p>
@@ -92,13 +95,13 @@ It has three components:
 </section>
 </section>
 <section>
-<section id="slide-orgf525c45">
-<h2 id="orgf525c45">Muzero</h2>
-<div class="outline-text-2" id="text-orgf525c45">
+<section id="slide-org846840b">
+<h2 id="org846840b">Muzero</h2>
+<div class="outline-text-2" id="text-org846840b">
 </div>
 </section>
-<section id="slide-org73d1a4f">
-<h3 id="org73d1a4f">What is it?</h3>
+<section id="slide-org4c3ef27">
+<h3 id="org4c3ef27">What is it?</h3>
 <p>
 Muzero is successor to AlphaZero. Similar to AlphaGo and AlphaZero it uses MCTS to get neural network
 predictions and choose actions.
@@ -108,17 +111,17 @@ predictions and choose actions.
 It requires no rules
 </p>
 </section>
-<section id="slide-orgdd37a11">
-<h3 id="orgdd37a11">How is it different?</h3>
+<section id="slide-org239e9f2">
+<h3 id="org239e9f2">How is it different?</h3>
 
-<div id="org3558468" class="figure">
+<div id="org8fc6bf4" class="figure">
 <p><img src="./assets/muzero/compare.webp" alt="compare.webp" width="50%" />
 </p>
 </div>
 
 </section>
-<section id="slide-org12e80e6">
-<h3 id="org12e80e6">MCTS</h3>
+<section id="slide-org16ec3c6">
+<h3 id="org16ec3c6">MCTS</h3>
 <div style="width:50%;float:left">
 <img src="assets/muzero/search_tree.webp" style="width: 100%">
 </div>
@@ -130,8 +133,8 @@ It requires no rules
 </div>
 
 </section>
-<section id="slide-org460d26f">
-<h3 id="org460d26f">Episode Generation</h3>
+<section id="slide-orga193d0e">
+<h3 id="orga193d0e">Episode Generation</h3>
 <div style="width:50%;float:right">
 <img src="assets/muzero/episode.webp" style="width: 100%">
 </div>
@@ -142,8 +145,8 @@ It requires no rules
 </div>
 
 </section>
-<section id="slide-orge94dbeb">
-<h3 id="orge94dbeb">Training</h3>
+<section id="slide-org9d9710e">
+<h3 id="org9d9710e">Training</h3>
 <div style="width:50%;float:left">
 <img src="assets/muzero/training.webp" style="width: 100%">
 </div>
@@ -154,17 +157,17 @@ It requires no rules
 </div>
 
 </section>
-<section id="slide-org7336b3c">
-<h3 id="org7336b3c">Architecture</h3>
+<section id="slide-orgd5d23a3">
+<h3 id="orgd5d23a3">Architecture</h3>
 
-<div id="orge38cb77" class="figure">
+<div id="org0154c4f" class="figure">
 <p><img src="./assets/muzero/arch.png" alt="arch.png" />
 </p>
 </div>
 
 </section>
-<section id="slide-org4d426fd">
-<h3 id="org4d426fd">Results</h3>
+<section id="slide-orge05d9fd">
+<h3 id="orge05d9fd">Results</h3>
 <ul>
 <li>Tested on Go, Shogi, Chess and Atari Suite</li>
 <li>MuZero performs slightly better than AlphaZero while using less compute in Go.</li>
@@ -175,8 +178,8 @@ It requires no rules
 </section>
 </section>
 <section>
-<section id="slide-orgc7ed5e2">
-<h2 id="orgc7ed5e2">Implications</h2>
+<section id="slide-orge772c86">
+<h2 id="orge772c86">Implications</h2>
 <ul>
 <li>Self-Driving Cars, Robotics</li>
 <li>Stock Market</li>
@@ -188,11 +191,11 @@ It requires no rules
 </section>
 </section>
 <section>
-<section id="slide-org3855557">
-<h2 id="org3855557">Conclusion</h2>
+<section id="slide-org45b71fd">
+<h2 id="org45b71fd">Conclusion</h2>
 
-<div id="orgd785baf" class="figure">
-<p><img src="./assets/muzero/end.jpg" alt="end.jpg" />
+<div id="org8a17c01" class="figure">
+<p><img src="./assets/muzero/frog.jpg" alt="frog.jpg" />
 </p>
 </div>
 </section>
