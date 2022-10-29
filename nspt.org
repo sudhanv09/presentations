@@ -1,0 +1,28 @@
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME:league
+#+REVEAL_INIT_OPTIONS: transition: 'concave'
+#+REVEAL_MARGIN:4.0
+#+REVEAL_MIN_SCALE: 2.0
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+title: PrintNightmare
+#+author: Sudhanv Apte, 陳峰楷, 李光耀, Abdillahi Ahmed
+
+* Introduction
+- Vulnerability in printing management service
+- Initially a LPE vulnerability
+- Impact changed to RCE even after patch
+* Impact
+- Vulnerability restricted users to add printers
+- Bad actors can run code with System Privileges
+- PrintSpoofer had a similar exploit
+- MS's patch fails to fully fix the vulnerability
+* Exploitation
+- Attacker must have low privilege in advance
+- Can get full control of Active Directory by targeting vulnerable Spooler service and running code with root
+* References
+- https://www.forescout.com/blog/printnightmare/
+- https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-1675
