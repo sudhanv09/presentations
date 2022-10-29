@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>PrintNightmare</title>
+<meta name="author" content="Sudhanv Apte, 陳峰楷, 李光耀, Abdillahi Ahmed"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/league.css" id="theme"/>
+
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">PrintNightmare</h1><p class="subtitle"></p>
+<h2 class="author">Sudhanv Apte, 陳峰楷, 李光耀, Abdillahi Ahmed</h2>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-org109754c">Introduction</a></li>
+<li><a href="#/slide-org13896c7">Impact</a></li>
+<li><a href="#/slide-orgb3ed475">Exploitation</a></li>
+<li><a href="#/slide-org9af72fb">References</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-org109754c">
+<h2 id="org109754c">Introduction</h2>
+<ul>
+<li>Vulnerability in printing management service</li>
+<li>Initially a LPE vulnerability</li>
+<li>Impact changed to RCE even after patch</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org13896c7">
+<h2 id="org13896c7">Impact</h2>
+<ul>
+<li>Vulnerability restricted users to add printers</li>
+<li>Bad actors can run code with System Privileges</li>
+<li>PrintSpoofer had a similar exploit</li>
+<li>MS&rsquo;s patch fails to fully fix the vulnerability</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgb3ed475">
+<h2 id="orgb3ed475">Exploitation</h2>
+<ul>
+<li>Attacker must have low privilege in advance</li>
+<li>Can get full control of Active Directory by targeting vulnerable Spooler service and running code with root</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org9af72fb">
+<h2 id="org9af72fb">References</h2>
+<ul>
+<li><a href="https://www.forescout.com/blog/printnightmare/">https://www.forescout.com/blog/printnightmare/</a></li>
+<li><a href="https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-1675">https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-1675</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition: 'concave'
+});
+
+</script>
+</body>
+</html>

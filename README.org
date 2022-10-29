@@ -13,3 +13,5 @@ Adaptive Control: [[https://sudhanv09.github.io/presentations/control.html][HERE
 OpenPilot: [[https://sudhanv09.github.io/presentations/opepilot.html][HERE]]
 
 FSS Paper Presentation: [[https://sudhanv09.github.io/presentations/fss.html][HERE]]
+
+NSPT: [[https://sudhanv09.github.io/presentations/nspt.html][HERE]]
