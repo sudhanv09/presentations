@@ -59,17 +59,19 @@
 - When dwFileCopyFlags contains APD INSTALL WARNED DRIVER, the result is 0x8000 and value is 0
 - This skips further verification by driver
 
-    #+ATTR_HTML: :width 60%
+    #+ATTR_HTML: :width 50%
   [[./assets/nspt/dwfile.png]]
 ** Get file handle
 - Value of v13 is obtained by inverting lower 8 bits of dwFileCopyFlags
 - Shifting it 4 bits to right and performing AND with 1
 - v13 determines 5th param of the CreateInternalDriverFileArray
+    #+ATTR_HTML: :width 60%
   [[./assets/nspt/spl.png]]
 - After calculation, when value of lower 8 bits of dwFileCopyFlags is 0x1X, a5 can be set to 0
-- When a5 is 0, validity check of the driver can be avoided
-  [[./assets/nspt/a5.png]]
 #+REVEAL: split
+- When a5 is 0, validity check of the driver can be avoided
+    #+ATTR_HTML: :width 50%
+  [[./assets/nspt/a5.png]]
 - Open file via CreateFile method, get 3 file handles
 - Save them in space requested by DllAllocSplMem method for later file update use
   [[./assets/nspt/dll.png]]
@@ -80,7 +82,7 @@
   - Check file info of the file handle
   - Copy file to *"C:\Windows\System32\spool\drivers\x64\3\new"*
   - Using MoveNewDriverRelatedFiles, move files and realize the update file
-    #+ATTR_HTML: :width 70%
+    #+ATTR_HTML: :width 60%
     [[./assets/nspt/copy.png]]
 ** Update Driver Files
 - Load the new config file
