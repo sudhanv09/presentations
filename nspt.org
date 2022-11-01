@@ -63,10 +63,13 @@
     #+ATTR_HTML: :width 60%
   [[./assets/nspt/rpcbind.png]]
 
-    #+REVEAL: split
-- If the "APD INSTALL WARNED DRIVER" flag is 1, the result of _bittest method will be 1 and v12 will be 0, as a result ValidateObjectAccess is bypassed
-    #+ATTR_HTML: :width 60%
+#+REVEAL: split
+#+ATTR_HTML: :style text-align:left
+- If the "APD INSTALL WARNED DRIVER" flag is 1, the result of _bittest method will be 1
+- v12 will be set to 0 and ValidateObjectAccess is bypassed
+    #+ATTR_HTML: :width 60% :class middle
   [[./assets/nspt/bittest.png]]
+
 ** ValidateDriverInfo
 - This part checks if the driver name is valid
 - Execution flow is as follows:
