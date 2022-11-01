@@ -1,1 +1,6 @@
  .reveal li { font-size: 80%; }
+img.middle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}

