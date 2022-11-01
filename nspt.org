@@ -39,12 +39,14 @@
 - Once the RPC functions are processed, the YAddPrinterDriverEx function is called
 - There is no conditional judgment on the param dwFileCopyFlags
 - The AddPrinterDriverEx function installs local/remote printer drivers and links config, data and driver files
-  #+ATTR_HTML: :class middle
+  #+ATTR_HTML: :class middle :width 30%
   [[./assets/nspt/addprinter.png]]
-- dwFileCopyFLags can set "APD INSTALL WARNED DRIVER" flag
-- When printer driver is added, the DLL is loaded with highest privilege\\
 
-  #+ATTR_HTML: :class middle
+** Continued ..
+- dwFileCopyFLags can set "APD INSTALL WARNED DRIVER" flag
+- When printer driver is added, the DLL is loaded with highest permission
+
+  #+ATTR_HTML: :class middle :width 50%
 [[./assets/nspt/error.png]]
 ** The Vulnerability
 - Use Process monitor to capture exploit when DLL is loaded
@@ -60,6 +62,8 @@
 - ValidateObjectAccess result is 0 for user and 1 for admin
     #+ATTR_HTML: :width 60%
   [[./assets/nspt/rpcbind.png]]
+
+    #+REVEAL: split
 - If the "APD INSTALL WARNED DRIVER" flag is 1, the result of _bittest method will be 1 and v12 will be 0, as a result ValidateObjectAccess is bypassed
     #+ATTR_HTML: :width 60%
   [[./assets/nspt/bittest.png]]
@@ -101,7 +105,7 @@
 ** Update Driver Files
 - Load the new config file
 - When loaded it will run the driver's DLL
-- Our DLL will be executed with highest privilege
+- Our DLL will be executed with highest permission
   [[./assets/nspt/update.png]]
 
 * Implementation
