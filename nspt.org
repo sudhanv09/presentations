@@ -65,7 +65,7 @@
 
 #+REVEAL: split
 #+ATTR_HTML: :style text-align:left
-- If the "APD INSTALL WARNED DRIVER" flag is 1, the result of _bittest method will be 1
+- If the "APD INSTALL WARNED DRIVER" flag is 0x8000, the result of _bittest method will be 1
 - v12 will be set to 0 and ValidateObjectAccess is bypassed
     #+ATTR_HTML: :width 60% :class middle
   [[./assets/nspt/bittest.png]]
