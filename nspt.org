@@ -1,7 +1,7 @@
 :REVEAL_PROPERTIES:
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 #+REVEAL_REVEAL_JS_VERSION: 4
-#+REVEAL_THEME:serif
+#+REVEAL_THEME:night
 #+REVEAL_INIT_OPTIONS: transition: 'concave', width:1200, height:800
 #+REVEAL_TITLE_SLIDE: <h2 class="title">%t</h2><em>%s</em><br><br>%a<br>%d
 #+reveal_extra_css: css/extra.css
@@ -9,7 +9,7 @@
 :END:
 
 #+title: PrintNightmare
-#+author: Sudhanv Apte, 陳峰楷, 李光耀, Abdillahi Ahmed
+#+author: Sudhanv Apte - 110318403, 李光耀 - 11159838, 陳峰楷 - 11159830, Abdillahi Ahmed - 110998420
 
 * Introduction
 - Windows has a service called Print Spooler
@@ -118,7 +118,6 @@
   - Python 3.10.5
 
 - Git repos used:
-  - https://github.com/tryhackme/CVE-2021-1675
   - https://github.com/tryhackme/impacket
   - https://github.com/JohnHammond/CVE-2021-34527
 
