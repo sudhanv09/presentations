@@ -9,5 +9,5 @@ Find my presentations:
 - Quadcopter Adaptive Control: [[https://sudhanv09.github.io/presentations/control.html][HERE]]
 - OpenPilot: [[https://sudhanv09.github.io/presentations/opepilot.html][HERE]]
 - FSS Paper Presentation: [[https://sudhanv09.github.io/presentations/fss.html][HERE]]
-- PrintNightmar NSPT: [[https://sudhanv09.github.io/presentations/nspt.html][HERE]]
-- Fusion: [[https://sudhanv.github.io/presentations/fusion.html][HERE]]
+- PrintNightmare NSPT: [[https://sudhanv09.github.io/presentations/nspt.html][HERE]]
+- Fusion: [[https://sudhanv09.github.io/presentations/fusion.html][HERE]]
