@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Magnetic Control of Plasmas using DRL</title>
+<meta name="author" content="Sudhanv Apte"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/night.css" id="theme"/>
+
+<link rel="stylesheet" href="css/extra.css"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2 class="title">Magnetic Control of Plasmas using DRL</h2><em></em><br><br>Sudhanv Apte<br>
+</section>
+<section id="sec-table-of-contents"><div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#/slide-orgc5cf650">Introduction</a></li>
+<li><a href="#/slide-orge241393">Architecture</a></li>
+<li><a href="#/slide-org71c8ad3">Demo</a></li>
+<li><a href="#/slide-org877fc0f">Discussion</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-orgc5cf650">
+<h2 id="orgc5cf650">Introduction</h2>
+<ul>
+<li>Nuclear fusion is a radical solution to our growing energy needs.</li>
+<li>Magnetic confinement, in particular in the tokamak config, promising path forward.</li>
+<li>Core challenge is to shape and maintain high temperature plasma within tokamak vessel.</li>
+<li>Requires advanced and complicated control to maintain the plasma config.</li>
+
+</ul>
+
+</section>
+<section id="slide-org43b3cad">
+<h3 id="org43b3cad">Continued ..</h3>
+<ul>
+<li>This work introduces a new architecture for autonomous control of magnetic coils</li>
+<li>It can cover conventional shapes and advanced configs like negative triangularity and snowflake config.</li>
+
+</ul>
+</section>
+<section id="slide-orga9e0a23">
+<h3 id="orga9e0a23">Tokamak</h3>
+
+<div id="orgfd2f999" class="figure">
+<p><img src="./assets/fusion/tokamak.png" alt="tokamak.png" />
+</p>
+</div>
+</section>
+<section id="slide-orga98c022">
+<h3 id="orga98c022">Objectives</h3>
+<ul>
+<li>Study effects of shaping the plasma into different configs.</li>
+<li>Optimize stability, confinement and energy exhaust.</li>
+
+</ul>
+
+</section>
+<section id="slide-org3dddf60">
+<h3 id="org3dddf60">Problems</h3>
+<ul>
+<li>Confining each config within tokamak requires control of magnetic coils which are coupled to the plasma.</li>
+<li>By controlling the coils we can control the plasma current, position and shape.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgedd78ba">
+<h3 id="orgedd78ba">Approaches</h3>
+<ul>
+<li>Conventional approach is to first precompute a set of feedforward coil currents and voltages</li>
+<li>Use PID controllers used to stabilize plasma vertical position and control radial position and current.</li>
+<li>These must not mutually interfere</li>
+<li>An outer loop for plasma shape which requires estimating plasma equilibrium to modulate coil currents.</li>
+
+</ul>
+
+</section>
+<section id="slide-org73a7ebb">
+<h3 id="org73a7ebb">RL</h3>
+<ul>
+<li>RL greatly simplifies the process.</li>
+<li>Focus on what to achieve than how.</li>
+<li>Simple controller replaces the nested control architecture.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orge241393">
+<h2 id="orge241393">Architecture</h2>
+<ul>
+<li>Designer specifies objectives for experiment.</li>
+<li>RL agent interacts with tokamak simulator to find optimal control policies.</li>
+<li>NN runs directly on the hardware in real time.</li>
+
+</ul>
+
+</section>
+<section id="slide-org158b2a3">
+<h3 id="org158b2a3">Phase 1</h3>
+<ul>
+<li>First goal is to achieve certain goals like stability of position and plasma current.</li>
+<li>Objectives are combined into rewards.</li>
+<li>Also penalizes control policy if it reaches undesired terminal states.</li>
+
+</ul>
+</section>
+<section id="slide-orga87f781">
+<h3 id="orga87f781">Phase 2</h3>
+<ul>
+<li>Second goal is to find optimal policy through interaction with the environment.</li>
+<li>A simulator is used for initial training of the network.</li>
+<li>The RL agent then finds optimal control policy for the specified reward function.</li>
+<li>However the data collection is slow because of computation requirements of the evolving plasma state.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgae9d89e">
+<h3 id="orgae9d89e">MPO</h3>
+<ul>
+<li>Maximimum Apriori Policy Optimization (MPO) is used to overcome this.</li>
+<li>Its an actor critic algorithm which supports data collection across distributed parallel streams and learns data in an efficient way.</li>
+<li>Actor runs on TCV so it is restricted and the critic is unrestricted as it is only used during training.</li>
+<li>Actor is a fast four layer NN and critic uses a much larger RNN.</li>
+
+</ul>
+</section>
+<section id="slide-org81d2593">
+<h3 id="org81d2593">Phase 3</h3>
+<ul>
+<li>Control policy is turned into an executable with a custom compiler.</li>
+<li>Executable is loaded by the TCV framework and experiments begin with standard plasma formation techniques.</li>
+<li>After handover the control policy actuates the 19 TCV coils to transform the plasma shape and currents to desired states.</li>
+<li>Zero shot transfer from simulation to hardware.</li>
+
+</ul>
+</section>
+<section id="slide-orgcb97ebb">
+<h3 id="orgcb97ebb">Neural Network</h3>
+<ul>
+<li>Has two architectures: critic and policy network. Both are adapted during training but only policy network deployed.</li>
+<li>Critic is an LSTM 256 units wide. Inputs are Hyperbolic tangent function value of last action.</li>
+<li>Outputs of LSTM are concatenated with its inputs and fed into MLP.</li>
+
+</ul>
+</section>
+<section id="slide-org374c733">
+<h3 id="org374c733">Continued ..</h3>
+<ul>
+<li>Policy network is restricted to architecture that can be evaluated on target within 50us to obtain 10kHz control rate.</li>
+<li>Input is fed to linear layer of 25 outputs with LayerNorm applied to it and bounded by Hyperbolic tangent function.</li>
+<li>After this it is fed to 3 layer MLP and output fed to final linear layer that outputs Mean and SD of Gaussian Distribution</li>
+<li>Params of this Gaussian Distribution over the actions are the output of the NN.</li>
+
+</ul>
+</section>
+<section id="slide-org49b3932">
+<h3 id="org49b3932">Continued ..</h3>
+
+<div id="orgcc24af4" class="figure">
+<p><img src="./assets/fusion/arch.png" alt="arch.png" width="120%" />
+</p>
+</div>
+</section>
+<section id="slide-org4802660">
+<h3 id="org4802660">Learning</h3>
+<ul>
+<li>Episodic training in which data is collected by running simulator with control policy in loop.</li>
+<li>Each episode runs until termination or time limit of 1s.</li>
+<li>Observation and rewards are collected at 0.1ms intervals.</li>
+<li>Training with 5000 actors takes 1-3 days, sometimes longer.</li>
+
+</ul>
+</section>
+<section id="slide-orgc593ebd">
+<h3 id="orgc593ebd">Rewards</h3>
+
+<div id="orgb5a538c" class="figure">
+<p><img src="./assets/fusion/rewards.png" alt="rewards.png" width="80%" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org71c8ad3">
+<h2 id="org71c8ad3">Demo</h2>
+<div class="outline-text-2" id="text-org71c8ad3">
+</div>
+</section>
+<section id="slide-orgdff91c3">
+<h3 id="orgdff91c3">Live</h3>
+
+<div id="org47a8fdd" class="figure">
+<p><img src="./assets/fusion/live.gif" alt="live.gif" width="150%``" />
+</p>
+</div>
+
+</section>
+<section id="slide-org4dacb0d">
+<h3 id="org4dacb0d">Control</h3>
+
+<div id="org3857388" class="figure">
+<p><img src="./assets/fusion/control.png" alt="control.png" width="115%``" />
+</p>
+</div>
+</section>
+<section id="slide-org6ffc4e3">
+<h3 id="org6ffc4e3">Droplets</h3>
+
+<div id="org798ef22" class="figure">
+<p><img src="./assets/fusion/droplets.png" alt="droplets.png" width="150%``" />
+</p>
+</div>
+</section>
+<section id="slide-org7111adc">
+<h3 id="org7111adc">Capabilities</h3>
+
+<div id="orge927144" class="figure">
+<p><img src="./assets/fusion/demo.png" alt="demo.png" width="115%``" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org877fc0f">
+<h2 id="org877fc0f">Discussion</h2>
+<ul>
+<li>Using single network to control 19 coils, learning best voltages to achieve plasma config.</li>
+<li>Estimate the properties of plasma in real time.</li>
+<li>Plasma held stationary for measurement, then steered back up and destroyed.</li>
+<li>Snowflake with many legs that reduces cooling cost.</li>
+<li>Droplet config where 2 plasmas exist in the vessel simultaneously.</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js"></script>
+
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+plugins: [RevealMarkdown, RevealZoom, RevealNotes],
+transition: 'concave', width:1200, height:800
+});
+
+</script>
+</body>
+</html>

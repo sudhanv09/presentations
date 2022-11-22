@@ -1,1 +1,107 @@
-#+title: Fusion
+:REVEAL_PROPERTIES:
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_REVEAL_JS_VERSION: 4
+#+REVEAL_THEME:night
+#+REVEAL_INIT_OPTIONS: transition: 'concave', width:1200, height:800
+#+REVEAL_TITLE_SLIDE: <h2 class="title">%t</h2><em>%s</em><br><br>%a<br>%d
+#+reveal_extra_css: css/extra.css
+#+OPTIONS: timestamp:nil toc:1 num:nil
+:END:
+
+#+title: Magnetic Control of Plasmas using DRL
+
+* Introduction
+- Nuclear fusion is a radical solution to our growing energy needs.
+- Magnetic confinement, in particular in the tokamak config, promising path forward.
+- Core challenge is to shape and maintain high temperature plasma within tokamak vessel.
+- Requires advanced and complicated control to maintain the plasma config.
+
+** Continued ..
+- This work introduces a new architecture for autonomous control of magnetic coils
+- It can cover conventional shapes and advanced configs like negative triangularity and snowflake config.
+** Tokamak
+[[./assets/fusion/tokamak.png]]
+** Objectives
+- Study effects of shaping the plasma into different configs.
+- Optimize stability, confinement and energy exhaust.
+
+** Problems
+- Confining each config within tokamak requires control of magnetic coils which are coupled to the plasma.
+- By controlling the coils we can control the plasma current, position and shape.
+
+** Approaches
+- Conventional approach is to first precompute a set of feedforward coil currents and voltages
+- Use PID controllers used to stabilize plasma vertical position and control radial position and current.
+- These must not mutually interfere
+- An outer loop for plasma shape which requires estimating plasma equilibrium to modulate coil currents.
+
+** RL
+- RL greatly simplifies the process.
+- Focus on what to achieve than how.
+- Simple controller replaces the nested control architecture.
+
+* Architecture
+- Designer specifies objectives for experiment.
+- RL agent interacts with tokamak simulator to find optimal control policies.
+- NN runs directly on the hardware in real time.
+
+** Phase 1
+- First goal is to achieve certain goals like stability of position and plasma current.
+- Objectives are combined into rewards.
+- Also penalizes control policy if it reaches undesired terminal states.
+** Phase 2
+- Second goal is to find optimal policy through interaction with the environment.
+- A simulator is used for initial training of the network.
+- The RL agent then finds optimal control policy for the specified reward function.
+- However the data collection is slow because of computation requirements of the evolving plasma state.
+
+** MPO
+- Maximimum Apriori Policy Optimization (MPO) is used to overcome this.
+- Its an actor critic algorithm which supports data collection across distributed parallel streams and learns data in an efficient way.
+- Actor runs on TCV so it is restricted and the critic is unrestricted as it is only used during training.
+- Actor is a fast four layer NN and critic uses a much larger RNN.
+** Phase 3
+- Control policy is turned into an executable with a custom compiler.
+- Executable is loaded by the TCV framework and experiments begin with standard plasma formation techniques.
+- After handover the control policy actuates the 19 TCV coils to transform the plasma shape and currents to desired states.
+- Zero shot transfer from simulation to hardware.
+** Neural Network
+- Has two architectures: critic and policy network. Both are adapted during training but only policy network deployed.
+- Critic is an LSTM 256 units wide. Inputs are Hyperbolic tangent function value of last action.
+- Outputs of LSTM are concatenated with its inputs and fed into MLP.
+** Continued ..
+- Policy network is restricted to architecture that can be evaluated on target within 50us to obtain 10kHz control rate.
+- Input is fed to linear layer of 25 outputs with LayerNorm applied to it and bounded by Hyperbolic tangent function.
+- After this it is fed to 3 layer MLP and output fed to final linear layer that outputs Mean and SD of Gaussian Distribution
+- Params of this Gaussian Distribution over the actions are the output of the NN.
+** Continued ..
+#+ATTR_HTML: :width 120%
+[[./assets/fusion/arch.png]]
+** Learning
+- Episodic training in which data is collected by running simulator with control policy in loop.
+- Each episode runs until termination or time limit of 1s.
+- Observation and rewards are collected at 0.1ms intervals.
+- Training with 5000 actors takes 1-3 days, sometimes longer.
+** Rewards
+#+ATTR_HTML: :width 80%
+[[./assets/fusion/rewards.png]]
+* Demo
+** Live
+#+ATTR_HTML: :width 150%``
+[[./assets/fusion/live.gif]]
+
+** Control
+#+ATTR_HTML: :width 115%``
+[[./assets/fusion/control.png]]
+** Droplets
+#+ATTR_HTML: :width 150%``
+[[./assets/fusion/droplets.png]]
+** Capabilities
+#+ATTR_HTML: :width 115%``
+[[./assets/fusion/demo.png]]
+* Discussion
+- Using single network to control 19 coils, learning best voltages to achieve plasma config.
+- Estimate the properties of plasma in real time.
+- Plasma held stationary for measurement, then steered back up and destroyed.
+- Snowflake with many legs that reduces cooling cost.
+- Droplet config where 2 plasmas exist in the vessel simultaneously.
