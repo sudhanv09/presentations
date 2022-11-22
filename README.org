@@ -10,4 +10,4 @@ Find my presentations:
 - OpenPilot: [[https://sudhanv09.github.io/presentations/opepilot.html][HERE]]
 - FSS Paper Presentation: [[https://sudhanv09.github.io/presentations/fss.html][HERE]]
 - PrintNightmar NSPT: [[https://sudhanv09.github.io/presentations/nspt.html][HERE]]
-- AlphaTensor: [[https://sudhanv.github.io/presentations/tensor.html][HERE]]
+- Fusion: [[https://sudhanv.github.io/presentations/fusion.html][HERE]]
